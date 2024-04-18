@@ -4,13 +4,32 @@ const USERs_KEY = '@users_';
 
 export const checkUser = async (username, password) => {
     let userOk= false
+    console.log(userOk)
     const users = await getUsers();
-    users.array.forEach(user => {
+    if (users.length!==0){
+      users.forEach(user => {
         if (user.username === username && user.password === password){
             userOk = true;
         }
-    });
+      });
+    }
     return userOk
+  };
+
+  export const checkUsernameAvailability = async (username) => {
+    console.log("entrato")
+    let usernameAvailable = true
+    const users = await getUsers();
+    if (users.length!==0){
+      users.forEach(user => {
+        if (user.username === username){
+          console.log("trovato doppione")
+            usernameAvailable = false;
+        }
+      });
+    }
+    console.log(usernameAvailable)
+    return usernameAvailable
   };
 
 export const getUsers = async () => {
@@ -23,22 +42,22 @@ export const getUsers = async () => {
   }
 };
 
-export const saveTODOs = async (todos) => {
+export const saveUsers = async (users) => {
   try {
-    const jsonValue = JSON.stringify(todos);
-    await AsyncStorage.setItem(TODOs_KEY, jsonValue);
+    const jsonValue = JSON.stringify(users);
+    await AsyncStorage.setItem(USERs_KEY, jsonValue);
   } catch (error) {
-    console.error('Error saving TODOs:', error);
+    console.error('Error saving Users:', error);
   }
 };
 
-export const addTODO = async (todo) => {
+export const addUser = async (username, password) => {
   try {
-    const todos = await getTODOs();
-    todos.push(todo);
-    await saveTODOs(todos);
+    const users = await getUsers();
+    users.push({username: username, password: password});
+    await saveUsers(users);
   } catch (error) {
-    console.error('Error adding TODO:', error);
+    console.error('Error adding user:', error);
   }
 };
 

@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRoute} from '@react-navigation/native';
+import { checkUsernameAvailability } from './data';
 
 
-const LoginScreen = ({ username, password, setUsername, setPassword }) => {
+const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, checkUser, checkUsernameAvailability, addUser}) => {
 
-const handleLogin = () => {
+const handleLogin = async () => {
+    console.log (username, password)
+    if(await checkUser(username, password) === true){
+        becomeAuthenticated(true)
+        setMessage("Benvenuto "+ username)
+    }
+    else{
+        setMessage("Username o password errati")
+        becomeAuthenticated(false)
+    }
 
 };
 
-const handleSignin = () => {
+const handleSignin = async () => {
+    if (await checkUsernameAvailability(username) === true){
+        addUser(username, password)
+        becomeAuthenticated(true)
+        setMessage("Benvenuto " + username)
+    } 
+    else{
+        becomeAuthenticated(false)
+        setMessage("Questo username è già in uso")
+    }
 };
 
 return (
@@ -30,6 +48,7 @@ value={password} onChangeText={setPassword}
 <TouchableOpacity style={styles.button} onPress={handleSignin}>
 <Text style={styles.buttonText}>Registrati come nuovo utente</Text>
 </TouchableOpacity>
+<Text>{message}</Text>
 </View>
 );};
 
@@ -40,7 +59,7 @@ input: { width: '80%', height: 50, borderWidth: 1, borderColor: '#ccc',
 borderRadius: 5, marginBottom: 10, paddingHorizontal: 10,
 },
 button: { width: '80%', height: 50, backgroundColor: 'blue',
-justifyContent: 'center', alignItems: 'center', borderRadius: 5,
+justifyContent: 'center', alignItems: 'center', borderRadius: 5, margin: 5,
 },
 buttonText: {
 color: 'white',

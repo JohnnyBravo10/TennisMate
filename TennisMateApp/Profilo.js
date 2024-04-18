@@ -4,13 +4,6 @@ import * as ImagePicker from 'expo-image-picker';
 
 const Profilo = () => {
 
-const [name, setName] = useState('');
-const [age, setAge] = useState('');
-const [image, setImage] = useState('');
-
-const [level, setLevel] = useState(1);
-const [club, setClub] = useState('');
-
  const handleImagePicker = async () => {
   console.log("beginning");
   console.log(image.uri)

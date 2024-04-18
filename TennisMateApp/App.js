@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import { checkUser} from './data';
+import {checkUser, checkUsernameAvailability, addUser} from './data';
 
 const Tab = createBottomTabNavigator();
 let todoIndex = 0
@@ -22,27 +22,39 @@ class App extends Component {
    super()
    this.state = {
      username:'',
-     password:''
+     password:'',
+     authenticated: false,
+     message:'Autenticarsi o registrare un nuovo utente',
+     
+     name:'',
+     
    }
    this.usernameChange = this.usernameChange.bind(this);
    this.passwordChange = this.passwordChange.bind(this);
+   this.becomeAuthenticated = this.becomeAuthenticated.bind(this)
+   this.setMessage = this.setMessage.bind(this)
  }
 
 
 usernameChange(username){
-  console.log("ok")
-  console.log(username)
   this.setState({username})
-  console.log(this.state)
 }
 
 passwordChange(password){
   this.setState({password})
 }
 
+becomeAuthenticated(authenticated){
+  this.setState({authenticated})
+}
+
+setMessage(message){
+  this.setState({message})
+}
+
 
  render(){
-   const { username, password } = this.state
+   const { username, password, authenticated, message} = this.state
    return(
    <NavigationContainer>
 <Tab.Navigator tabBarOptions={{
@@ -59,6 +71,13 @@ passwordChange(password){
                 password={password}
                 setUsername={this.usernameChange}
                 setPassword={this.passwordChange}
+                authenticated={authenticated}
+                message={message}
+                becomeAuthenticated={this.becomeAuthenticated}
+                setMessage={this.setMessage}
+                checkUser = {checkUser}
+                checkUsernameAvailability = {checkUsernameAvailability}
+                addUser = {addUser}
               />
             )}
             </Tab.Screen>
