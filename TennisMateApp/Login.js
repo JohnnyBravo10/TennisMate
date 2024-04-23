@@ -34,7 +34,7 @@ return (
 <View style={styles.container}>
 <Text style={styles.title}>Login</Text>
 <TextInput style={styles.input}
-placeholder="Username"
+placeholder="Usernameeeeee"
 value={username} onChangeText={setUsername}
 />
 <TextInput style={styles.input}
