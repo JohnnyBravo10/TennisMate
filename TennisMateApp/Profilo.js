@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
+import NumericInput from 'react-native-numeric-input';
+import { Ionicons } from '@expo/vector-icons';
+
 const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub}) => {
 
  const handleImagePicker = async () => {
@@ -63,12 +66,18 @@ return (
       <View style={styles.inputContainer}>
         <Text style={styles.placeholder}>Livello</Text>
         <TextInput
-          style={styles.input}
-          placeholder="Livello"
-          value={level}
-          onChangeText={setLevel}
-        />
+        style={styles.input}
+        value={level}
+        onChangeText={setLevel}
+        placeholder="Inserisci il tuo livello"
+        keyboardType="numeric"
+      />
+        
       </View>
+    </View>
+
+    <View style={styles.container}>
+      <Text style={styles.subtitle}>Preferenze</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.placeholder}>circolo</Text>
         <TextInput
@@ -78,10 +87,6 @@ return (
           onChangeText={setClub}
         />
       </View>
-    </View>
-
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Preferenze</Text>
     </View>
   </View>
 <TouchableOpacity style={styles.button} onPress={saveChanges}>

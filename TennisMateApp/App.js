@@ -29,7 +29,7 @@ class App extends Component {
      name:'',
      age:'',
      image:'',
-     level:'',
+     level:0,
      club:'',
      
    }
@@ -70,9 +70,11 @@ ageChange(age){
 }
 imageChange(image){
   this.setState({image})
+  console.log("Eccooooooooo")
 }
 levelChange(level){
   this.setState({level})
+  console.log("Livello cambiato: ", level)
 }
 clubChange(club){
   this.setState({club})
