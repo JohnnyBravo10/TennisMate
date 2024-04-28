@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-const Profilo = () => {
+const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub}) => {
 
  const handleImagePicker = async () => {
   console.log("beginning");

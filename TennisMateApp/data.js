@@ -16,6 +16,18 @@ export const checkUser = async (username, password) => {
     return userOk
   };
 
+  export const findUser = async (username) => {
+    const users = await getUsers();
+    if (users.length!==0){
+      users.forEach(user => {
+        if (user.username === username){
+            return user;
+        }
+      });
+    }
+    return {}
+  };
+
   export const checkUsernameAvailability = async (username) => {
     console.log("entrato")
     let usernameAvailable = true

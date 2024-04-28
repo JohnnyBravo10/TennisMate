@@ -3,13 +3,14 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { checkUsernameAvailability } from './data';
 
 
-const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, checkUser, checkUsernameAvailability, addUser}) => {
+const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, checkUser, checkUsernameAvailability, addUser, loadData}) => {
 
 const handleLogin = async () => {
     console.log (username, password)
     if(await checkUser(username, password) === true){
         becomeAuthenticated(true)
         setMessage("Benvenuto "+ username)
+        loadData(username)
     }
     else{
         setMessage("Username o password errati")

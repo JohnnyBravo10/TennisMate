@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUSer} from './data';
 
 const Tab = createBottomTabNavigator();
 let todoIndex = 0
@@ -27,34 +27,72 @@ class App extends Component {
      message:'Autenticarsi o registrare un nuovo utente',
      
      name:'',
+     age:'',
+     image:'',
+     level:'',
+     club:'',
      
    }
    this.usernameChange = this.usernameChange.bind(this);
    this.passwordChange = this.passwordChange.bind(this);
    this.becomeAuthenticated = this.becomeAuthenticated.bind(this)
    this.setMessage = this.setMessage.bind(this)
+
+   this.loadData = this.loadData.bind(this)
+
+   this.nameChange = this.nameChange.bind(this);
+   this.ageChange = this.ageChange.bind(this);
+   this.imageChange = this.imageChange.bind(this);
+   this.levelChange = this.levelChange.bind(this);
+   this.clubChange = this.clubChange.bind(this)
  }
 
 
 usernameChange(username){
   this.setState({username})
 }
-
 passwordChange(password){
   this.setState({password})
 }
-
 becomeAuthenticated(authenticated){
   this.setState({authenticated})
 }
-
 setMessage(message){
   this.setState({message})
 }
 
 
+nameChange(name){
+  this.setState({name})
+}
+ageChange(age){
+  this.setState({age})
+}
+imageChange(image){
+  this.setState({image})
+}
+levelChange(level){
+  this.setState({level})
+}
+clubChange(club){
+  this.setState({club})
+}
+
+loadData(username){
+  user = findUSer(username);
+  this.nameChange(user.name);
+  this.ageChange(user.age);
+  this.imageChange(user.image);
+  this.levelChange(user.level);
+  this.clubChange(user.club);
+}
+
  render(){
-   const { username, password, authenticated, message} = this.state
+
+   const { username, password, authenticated, message,
+            name, age, image, level, club} = this.state
+
+
    return(
    <NavigationContainer>
 <Tab.Navigator tabBarOptions={{
@@ -78,14 +116,31 @@ setMessage(message){
                 checkUser = {checkUser}
                 checkUsernameAvailability = {checkUsernameAvailability}
                 addUser = {addUser}
+                loadData = {this.loadData}
               />
             )}
             </Tab.Screen>
 
 
-<Tab.Screen name="👤​" component={Profilo} options={{
-            tabBarIcon: () => <Text style={{ fontSize: 24 }}>👤</Text>, 
-          }}/>
+<Tab.Screen name="👤​" 
+            options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>👤</Text>}}>
+            {(props) => (
+            <Profilo
+                {...props}
+                name={name}
+                age={age}
+                setName={this.nameChange}
+                setAge={this.ageChange}
+                image = {image}
+                setImage = {this.imageChange}
+                level={level}
+                setLevel={this.levelChange}
+                club = {club}
+                setClub = {this.clubChange}
+            />
+          )}
+          </Tab.Screen>
+
 <Tab.Screen name="💬​​" component={Chat} options={{
             tabBarIcon: () => <Text style={{ fontSize: 24 }}>💬</Text>, 
           }}/>
