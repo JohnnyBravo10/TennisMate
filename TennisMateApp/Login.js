@@ -24,6 +24,7 @@ const handleSignin = async () => {
         addUser(username, password)
         becomeAuthenticated(true)
         setMessage("Benvenuto " + username)
+        loadData(username)
     } 
     else{
         becomeAuthenticated(false)

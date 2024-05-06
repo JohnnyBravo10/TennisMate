@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUSer} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails} from './data';
 
 const Tab = createBottomTabNavigator();
 let todoIndex = 0
@@ -27,7 +27,7 @@ class App extends Component {
      message:'Autenticarsi o registrare un nuovo utente',
      
      name:'',
-     age:'',
+     age:0,
      image:'',
      level:0,
      club:'',
@@ -38,18 +38,21 @@ class App extends Component {
    this.becomeAuthenticated = this.becomeAuthenticated.bind(this)
    this.setMessage = this.setMessage.bind(this)
 
+   this.resetDetails = this.resetDetails.bind(this)
    this.loadData = this.loadData.bind(this)
 
    this.nameChange = this.nameChange.bind(this);
    this.ageChange = this.ageChange.bind(this);
    this.imageChange = this.imageChange.bind(this);
    this.levelChange = this.levelChange.bind(this);
-   this.clubChange = this.clubChange.bind(this)
+   this.clubChange = this.clubChange.bind(this);
+
+   this.updateUser = this.updateUser.bind(this);
  }
 
 
 usernameChange(username){
-  this.setState({username})
+  this.setState({username: username})
 }
 passwordChange(password){
   this.setState({password})
@@ -63,30 +66,63 @@ setMessage(message){
 
 
 nameChange(name){
-  this.setState({name})
+  console.log("inizio name change")
+  console.log(this.state.name)
+  this.setState({name: name})
+  console.log(this.state.name)
+  console.log("fine name change")
 }
 ageChange(age){
   this.setState({age})
 }
 imageChange(image){
   this.setState({image})
-  console.log("Eccooooooooo")
 }
 levelChange(level){
   this.setState({level})
-  console.log("Livello cambiato: ", level)
 }
 clubChange(club){
   this.setState({club})
 }
 
-loadData(username){
-  user = findUSer(username);
+resetDetails(){
+  console.log("starting reset")
+  this.setState({name: '',
+    age: 0,
+    image: '',
+    level: 0,
+    club: ''
+  })
+
+  console.log(this.state.name)
+  console.log("terminato reset")
+
+}
+
+async loadData(username){
+  this.resetDetails();
+  user = await (findUser(username));
+  console.log("user: ", user)
+  if(user.name){
   this.nameChange(user.name);
+  }
+  if(user.age){
   this.ageChange(user.age);
+  }
+  if(user.image){
   this.imageChange(user.image);
+  }
+  if(user.level){
   this.levelChange(user.level);
+  }
+  if(user.club){
   this.clubChange(user.club);
+  }
+  console.log(this.state)
+}
+
+updateUser(){
+updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.level, this.state.club)
 }
 
  render(){
@@ -139,6 +175,7 @@ loadData(username){
                 setLevel={this.levelChange}
                 club = {club}
                 setClub = {this.clubChange}
+                updateUser = {this.updateUser}
             />
           )}
           </Tab.Screen>

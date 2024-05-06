@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import NumericInput from 'react-native-numeric-input';
 import { Ionicons } from '@expo/vector-icons';
 
-const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub}) => {
+const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub, updateUser}) => {
 
  const handleImagePicker = async () => {
   console.log("beginning");
@@ -25,9 +25,6 @@ const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, 
     console.log("end");
     console.log(image.uri)
   };
-
-const saveChanges = () => {
-};
 
 return (
 <View>
@@ -51,6 +48,7 @@ return (
           placeholder="Età"
           value={age}
           onChangeText={setAge}
+          keyboardType='numeric'
         />
       </View>
       <View style={styles.inputContainer}>
@@ -64,13 +62,13 @@ return (
     <View style={styles.container}>
       <Text style={styles.subtitle}>Abilità</Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.placeholder}>Livello</Text>
+        <Text style={styles.placeholder}>Livello (da 1 a 10)</Text>
         <TextInput
         style={styles.input}
         value={level}
         onChangeText={setLevel}
         placeholder="Inserisci il tuo livello"
-        keyboardType="numeric"
+        keyboardType='numeric'
       />
         
       </View>
@@ -89,7 +87,7 @@ return (
       </View>
     </View>
   </View>
-<TouchableOpacity style={styles.button} onPress={saveChanges}>
+<TouchableOpacity style={styles.button} onPress={updateUser}>
   <Text style={styles.buttonText}>Salva modifiche</Text>
 </TouchableOpacity>
 </View>

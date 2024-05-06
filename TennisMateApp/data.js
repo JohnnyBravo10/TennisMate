@@ -18,14 +18,16 @@ export const checkUser = async (username, password) => {
 
   export const findUser = async (username) => {
     const users = await getUsers();
+    foundUser ={};
     if (users.length!==0){
       users.forEach(user => {
         if (user.username === username){
-            return user;
+            console.log("found user:", user)
+            foundUser = user
         }
       });
     }
-    return {}
+    return foundUser
   };
 
   export const checkUsernameAvailability = async (username) => {
@@ -83,14 +85,28 @@ export const removeTODO = async (todoId) => {
   }
 };
 
-export const updateTODO = async (todoId, updatedTodo) => {
+export const updateUserDetails = async (username, name, age, image, level, club) => {
   try {
-    const todos = await getTODOs();
-    const updatedTodos = todos.map(todo =>
-      todo.id === todoId ? { ...todo, ...updatedTodo } : todo
+    const users = await getUsers();
+    console.log("starting updating")
+    console.log(users)
+    const updatedUsers = users.map(user =>
+      {
+      if (user.username === username){
+        user.name = name
+        user.age = age
+        user.image = image
+        user.level = level
+        user.club = club
+      }
+      return user
+      }
+
     );
-    await saveTODOs(updatedTodos);
+    console.log(updatedUsers)
+    await saveUsers(updatedUsers);
+    console.log("updateato details")
   } catch (error) {
-    console.error('Error updating TODO:', error);
+    console.error('Error updating Users:', error);
   }
 };
