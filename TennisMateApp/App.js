@@ -11,11 +11,9 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge} from './data';
 
 const Tab = createBottomTabNavigator();
-let todoIndex = 0
-
 
 class App extends Component {
  constructor(){
@@ -31,6 +29,8 @@ class App extends Component {
      image:'',
      level:0,
      club:'',
+
+     challenges:[],
      
    }
    this.usernameChange = this.usernameChange.bind(this);
@@ -48,6 +48,10 @@ class App extends Component {
    this.clubChange = this.clubChange.bind(this);
 
    this.updateUser = this.updateUser.bind(this);
+
+   this.changeChallenges = this.changeChallenges.bind(this)
+   this.toggleAccepted = this.toggleAccepted.bind(this)
+   this.deleteChallenge = this.deleteChallenge.bind(this)
  }
 
 
@@ -91,7 +95,9 @@ resetDetails(){
     age: 0,
     image: '',
     level: 0,
-    club: ''
+    club: '',
+
+    challenges: {},
   })
 
   console.log(this.state.name)
@@ -118,6 +124,10 @@ async loadData(username){
   if(user.club){
   this.clubChange(user.club);
   }
+
+  challenges = await (findChallenges(username));
+  this.changeChallenges(challenges)
+
   console.log(this.state)
 }
 
@@ -125,10 +135,47 @@ updateUser(){
 updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.level, this.state.club)
 }
 
+changeChallenges(challenges){
+  this.setState({challenges: challenges})
+}
+
+async deleteChallenge(challengeIndex){
+  let { challenges } = this.state
+  received = challenges.received.filter((challenge) => challenge.challengeIndex !== challengeIndex)
+  sent = challenges.sent.filter((challenge) => challenge.challengeIndex !== challengeIndex)
+  this.setState({ challenges: {received: received, sent: sent} })
+
+ try {
+   await removeChallenge(challengeIndex);
+ } catch (error) {
+   console.error('Error deleting challenge:', error);
+ }   
+}
+
+async toggleAccepted(challengeIndex) {
+  try {
+    const { challenges } = this.state;
+    const updatedChallenges = challenges.map(challenge => {
+      if (challenge.challengeIndex === challengeIndex) {
+        // Toggle the 'complete' property
+        return { ...challenge, accepted: !challenge.accepted };
+      }
+      return challenge;
+    });
+    this.setState({ challenges: updatedChallenges });
+
+    // Persist updated TODOs to storage
+    await updateChallenge(challengeIndex, { accepted: !challenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted });
+  } catch (error) {
+    console.error('Error updating challenges:', error);
+  }
+}
+
+
  render(){
 
    const { username, password, authenticated, message,
-            name, age, image, level, club} = this.state
+            name, age, image, level, club, challenges} = this.state
 
 
    return(
@@ -183,9 +230,19 @@ updateUserDetails(this.state.username, this.state.name, this.state.age, this.sta
 <Tab.Screen name="💬​​" component={Chat} options={{
             tabBarIcon: () => <Text style={{ fontSize: 24 }}>💬</Text>, 
           }}/>
-<Tab.Screen name="🎾​​​" component={Sfide} options={{
-            tabBarIcon: () => <Text style={{ fontSize: 24 }}>🎾​​</Text>, 
-          }}/>
+
+<Tab.Screen name="🎾​​​"
+           options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>🎾​​</Text>}}>
+            {(props) => (
+            <Sfide
+                {...props}
+                challenges={challenges}
+                toggleAccepted={this.toggleAccepted}
+                deleteChallenge={this.deleteChallenge}
+            />
+          )}
+          </Tab.Screen>
+
 <Tab.Screen name="👥​" component={Consigliati} options={{
             tabBarIcon: () => <Text style={{ fontSize: 24 }}>👥</Text>, 
           }}/>

@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USERs_KEY = '@users_';
+const CHALLENGEs_KEY = '@challenges_'
 
 export const checkUser = async (username, password) => {
     let userOk= false
@@ -30,6 +31,23 @@ export const checkUser = async (username, password) => {
     return foundUser
   };
 
+  export const findChallenges = async (username) => {
+    const challenges = await getChallenges();
+    receivedChallenges = [];
+    sentChallenges = [];
+    if (challenges.length!==0){
+      challenges.forEach(challenge => {
+        if (challenge.challenger === username){
+            sentChallenges.append(challenge)
+        }
+        if (challenge.challenged === username){
+          receivedChallenges.append(challenge)
+      }
+      });
+    }
+    return {received: receivedChallenges, sent: sentChallenges}
+  };
+
   export const checkUsernameAvailability = async (username) => {
     console.log("entrato")
     let usernameAvailable = true
@@ -56,12 +74,31 @@ export const getUsers = async () => {
   }
 };
 
+const getChallenges = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem(CHALLENGEs_KEY);
+    return jsonValue != null ? JSON.parse(jsonValue) : [];
+  } catch (error) {
+    console.error('Error retrieving CHALLENGES:', error);
+    return [];
+  }
+};
+
 export const saveUsers = async (users) => {
   try {
     const jsonValue = JSON.stringify(users);
     await AsyncStorage.setItem(USERs_KEY, jsonValue);
   } catch (error) {
     console.error('Error saving Users:', error);
+  }
+};
+
+export const saveChallenges = async (challenges) => {
+  try {
+    const jsonValue = JSON.stringify(challenges);
+    await AsyncStorage.setItem(CHALLENGEs_KEY, jsonValue);
+  } catch (error) {
+    console.error('Error saving Challenges:', error);
   }
 };
 
@@ -75,13 +112,13 @@ export const addUser = async (username, password) => {
   }
 };
 
-export const removeTODO = async (todoId) => {
+export const removeChallenge = async (challengeId) => {
   try {
-    const todos = await getTODOs();
-    const updatedTodos = todos.filter(todo => todo.id !== todoId);
-    await saveTODOs(updatedTodos);
+    const challenges = await getChallenges();
+    const updatedChallenges = challenges.filter(challenge => challenge.id !== challengeId);
+    await saveChallenges(updatedChallenges);
   } catch (error) {
-    console.error('Error removing TODO:', error);
+    console.error('Error removing challenge:', error);
   }
 };
 
