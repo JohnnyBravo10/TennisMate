@@ -9,9 +9,10 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     receivedChallenges = challenges.received
     sentChallenges = challenges.sent
 
-    receivedChallenges = receivedChallenges.map((challenge, i) => {
+    receivedChallenges = Array.from(receivedChallenges).map((challenge) => {
         return (
             <ReceivedChallenge
+                {...props}
                 toggleAccepted={toggleAccepted}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
@@ -19,9 +20,10 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
         )
     })
 
-    sentChallenges = sentChallenges.map((challenge, i) => {
+    sentChallenges = Array.from(sentChallenges).map((challenge) => {
         return (
             <SentChallenge
+                {...props}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
                 challenge={challenge} />

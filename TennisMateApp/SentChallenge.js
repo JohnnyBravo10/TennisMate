@@ -8,6 +8,12 @@ const SentChallenge = ({challenge, deleteChallenge}) => (
        <Text style={styles.challengeText}>
            {challenge.challenged}
        </Text>
+       <Text>
+        {challenge.place}
+       </Text>
+       <Text>
+        {challenge.date_time}
+       </Text>
        <View style={styles.buttons}>
            <Text>{challenge.accepted ? "Accettata":"In attesa"}</Text>
            <ChallengeButton

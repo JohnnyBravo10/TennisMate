@@ -74,6 +74,27 @@ export const getUsers = async () => {
   }
 };
 
+export const getSuggestedUsers = async (username) => {
+  try {
+    const allUsers = await getUsers();
+    console.log("users da filtrare:", allUsers)
+    const user = await findUser(username);
+    const suggestedUsers = [];
+    allUsers.forEach(otherUser => {
+      if (user.username !== otherUser.username){
+        if (!otherUser.level|| (user.level<= (otherUser.level +2) && user.level >= (otherUser.level -2)) ){
+          suggestedUsers.push(otherUser)
+        }
+      }
+    })
+    console.log("selezionati:", suggestedUsers)
+    return suggestedUsers;
+  } catch (error) {
+    console.error('Error retrieving suggested users:', error);
+    return [];
+  }
+};
+
 const getChallenges = async () => {
   try {
     const jsonValue = await AsyncStorage.getItem(CHALLENGEs_KEY);
@@ -105,7 +126,7 @@ export const saveChallenges = async (challenges) => {
 export const addUser = async (username, password) => {
   try {
     const users = await getUsers();
-    users.push({username: username, password: password});
+    users.push({username: username, password: password, image: 'assets/profile.jpg'});
     await saveUsers(users);
   } catch (error) {
     console.error('Error adding user:', error);

@@ -8,6 +8,12 @@ const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
        <Text style={styles.challengeText}>
            {challenge.challenger}
        </Text>
+       <Text>
+        {challenge.place}
+       </Text>
+       <Text>
+        {challenge.date_time}
+       </Text>
        <View style={styles.buttons}>
            <ChallengeButton
                name='Accetta'

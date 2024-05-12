@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers} from './data';
 
 const Tab = createBottomTabNavigator();
 
@@ -155,7 +155,7 @@ async deleteChallenge(challengeIndex){
 async toggleAccepted(challengeIndex) {
   try {
     const { challenges } = this.state;
-    const updatedChallenges = challenges.map(challenge => {
+    const updatedChallenges = Array.from(challenges).map(challenge => {
       if (challenge.challengeIndex === challengeIndex) {
         // Toggle the 'complete' property
         return { ...challenge, accepted: !challenge.accepted };
@@ -243,9 +243,16 @@ async toggleAccepted(challengeIndex) {
           )}
           </Tab.Screen>
 
-<Tab.Screen name="👥​" component={Consigliati} options={{
-            tabBarIcon: () => <Text style={{ fontSize: 24 }}>👥</Text>, 
-          }}/>
+          <Tab.Screen name="👥​​​"
+           options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>👥​​</Text>}}>
+            {(props) => (
+            <Consigliati
+                {...props}
+                username = {username}
+                getSuggestedUsers = {getSuggestedUsers}
+            />
+          )}
+          </Tab.Screen>
 
 </Tab.Navigator>
 </NavigationContainer>
