@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Image, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
-const Consigliati = ({username, getSuggestedUsers}) => {
+const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [proposedPlace, setProposedPlace] = useState('');
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
 
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
@@ -33,6 +39,47 @@ const Consigliati = ({username, getSuggestedUsers}) => {
                     <Text style={styles.placeholder}>Circolo preferito</Text>
                     <Text>{user.club}</Text>
                     <Image source={{ uri: user.image }} style={styles.image} />
+
+                    <Button 
+                      style={styles.button}
+                      title="Sfida"
+                      onPress={() => setModalVisible(true)}
+                    />
+                    <Modal
+                      visible={modalVisible}
+                      animationType="slide"
+                      //transparent={true}
+                      onRequestClose={() => setModalVisible(false)}
+                    >
+                      <View>
+                      <View style={styles.inputContainer}>
+
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Place"
+
+                        value={proposedPlace}
+                        onChangeText={setProposedPlace}
+                      />
+                      <DateTimePicker
+                        value={selectedDate}
+                        mode="datetime"
+                        is24Hour={true}
+                        display="default"
+                        onChange={setSelectedDate}
+                      />
+
+                      <Button
+                        title="Invia sfida"
+                        onPress={() => setModalVisible(false)}
+                      />
+                      <Button
+                        title="Annulla"
+                        onPress={() => setModalVisible(false)}
+                      />
+                      </View>
+                      </View>
+                    </Modal>
                 </View>
             ))}
         </ScrollView>
@@ -79,7 +126,16 @@ const styles = StyleSheet.create({
       marginBottom: 20, // Spazio inferiore tra i contenitori suggeriti
       borderWidth: 1, // Opzionale: aggiunge un bordo per visualizzare il contenitore
       padding: 10, // Opzionale: aggiunge spazio interno al contenitore
-    }
+    },
+
+    button: {
+      alignSelf: 'flex-end',
+      padding: 7,
+      borderColor: '#ededed',
+      borderWidth: 1,
+      borderRadius: 4,
+      marginRight: 5
+  },
   });
 
 export default Consigliati

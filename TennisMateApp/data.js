@@ -133,6 +133,16 @@ export const addUser = async (username, password) => {
   }
 };
 
+export const addChallenge = async (usernameChallenger, usernameChallenged, dateTime, place) => {
+  try {
+    const challenges = await getChallenges();
+    challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false});
+    await saveChallenges(challenges);
+  } catch (error) {
+    console.error('Error adding challenge: ', error);
+  }
+};
+
 export const removeChallenge = async (challengeId) => {
   try {
     const challenges = await getChallenges();

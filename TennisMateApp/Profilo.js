@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react
 import * as ImagePicker from 'expo-image-picker';
 
 import NumericInput from 'react-native-numeric-input';
-import { Ionicons } from '@expo/vector-icons';
 
 const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub, updateUser}) => {
 

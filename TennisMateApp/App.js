@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers, addChallenge} from './data';
 
 const Tab = createBottomTabNavigator();
 
@@ -250,6 +250,7 @@ async toggleAccepted(challengeIndex) {
                 {...props}
                 username = {username}
                 getSuggestedUsers = {getSuggestedUsers}
+                addChallenge = {addChallenge}
             />
           )}
           </Tab.Screen>
