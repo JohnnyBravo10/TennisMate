@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
+import {Text, View, Image, StyleSheet, ScrollView} from 'react-native';
 
 const Consigliati = ({username, getSuggestedUsers}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
@@ -7,20 +7,23 @@ const Consigliati = ({username, getSuggestedUsers}) => {
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
             try {
-                const users = await getSuggestedUsers(username); // Esegui la chiamata asincrona per ottenere gli utenti suggeriti
-                setSuggestedUsers(users); // Aggiorna lo stato con gli utenti suggeriti ottenuti dalla Promise
+                const users = await getSuggestedUsers(username); 
+                setSuggestedUsers(users); 
             } catch (error) {
                 console.error('Errore durante il recupero degli utenti suggeriti:', error);
             }
         };
 
-        fetchSuggestedUsers(); // Avvia la funzione per ottenere gli utenti suggeriti
-    }, [username, getSuggestedUsers]); // Dipendenze per l'effetto useEffect
+        fetchSuggestedUsers(); 
+    }, [username, getSuggestedUsers]); 
+
+    console.log("suggerimenti da rappresentare:", suggestedUsers)
+
 
     return (
-        <View>
-            {suggestedUsers.map(user => (
-                <View key={user.username} style={styles.userContainer}>
+        <ScrollView>
+            {suggestedUsers.map((user, index) => (
+                <View key={index} style={styles.suggestedContainer}>
                     <Text style={styles.placeholder}>Nome</Text>
                     <Text>{user.name}</Text>
                     <Text style={styles.placeholder}>Età</Text>
@@ -32,7 +35,7 @@ const Consigliati = ({username, getSuggestedUsers}) => {
                     <Image source={{ uri: user.image }} style={styles.image} />
                 </View>
             ))}
-        </View>
+        </ScrollView>
     );
 };
 
@@ -71,6 +74,12 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
       marginBottom: 10,
     },
+    suggestedContainer:{
+      flexDirection: 'column', // Imposta la disposizione verticale
+      marginBottom: 20, // Spazio inferiore tra i contenitori suggeriti
+      borderWidth: 1, // Opzionale: aggiunge un bordo per visualizzare il contenitore
+      padding: 10, // Opzionale: aggiunge spazio interno al contenitore
+    }
   });
 
 export default Consigliati

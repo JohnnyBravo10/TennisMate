@@ -30,7 +30,7 @@ class App extends Component {
      level:0,
      club:'',
 
-     challenges:[],
+     challenges:{received:[], sent:[]},
      
    }
    this.usernameChange = this.usernameChange.bind(this);
@@ -97,7 +97,7 @@ resetDetails(){
     level: 0,
     club: '',
 
-    challenges: {},
+    challenges: {received:[], sent:[]},
   })
 
   console.log(this.state.name)
@@ -108,7 +108,6 @@ resetDetails(){
 async loadData(username){
   this.resetDetails();
   user = await (findUser(username));
-  console.log("user: ", user)
   if(user.name){
   this.nameChange(user.name);
   }
@@ -126,6 +125,7 @@ async loadData(username){
   }
 
   challenges = await (findChallenges(username));
+  console.log("sfide trovate:", challenges)
   this.changeChallenges(challenges)
 
   console.log(this.state)

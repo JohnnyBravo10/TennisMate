@@ -6,10 +6,12 @@ import SentChallenge from './SentChallenge'
 
 const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
 
+    console.log("sfide da cui partre:", challenges)
+
     receivedChallenges = challenges.received
     sentChallenges = challenges.sent
 
-    receivedChallenges = Array.from(receivedChallenges).map((challenge) => {
+    receivedChallenges = receivedChallenges.map((challenge) => {
         return (
             <ReceivedChallenge
                 {...props}
@@ -20,7 +22,7 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
         )
     })
 
-    sentChallenges = Array.from(sentChallenges).map((challenge) => {
+    sentChallenges = sentChallenges.map((challenge) => {
         return (
             <SentChallenge
                 {...props}
