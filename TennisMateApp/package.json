@@ -22,6 +22,8 @@
     "react-dom": "18.2.0",
     "react-native": "0.73.6",
     "react-native-numeric-input": "^1.9.1",
+    "react-native-paper-dates": "^0.22.9",
+    "react-native-ui-datepicker": "^2.0.2",
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {

@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+//import DateTimePicker from '@react-native-community/datetimepicker';
+
+import DateTimePicker from 'react-native-ui-datepicker';
+
+//import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates';
 
 const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
 
+    const [modalVisible, setModalVisible] = useState(false)
     const [proposedPlace, setProposedPlace] = useState('');
+    
+
+    /*
+    const [dateModalVisible, setDateModalVisible] = useState(false)
     const [selectedDate, setSelectedDate] = useState(new Date());
+   
+
+    const [timeModalVisible, setTimeModalVisible] = useState(false);
+    const [selectedHour, setSelectedHour] = useState(0);
+    const [selectedMinute, setSelectedMinute] = useState(0);
+    */
+
+    const [date, setDate] = useState(new Date());
 
 
     useEffect(() => {
@@ -23,7 +39,38 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
         fetchSuggestedUsers(); 
     }, [username, getSuggestedUsers]); 
 
-    console.log("suggerimenti da rappresentare:", suggestedUsers)
+
+
+      /*
+
+      const onDismissTime = React.useCallback(() => {
+        setTimeModalVisible(false)
+      }, [setTimeModalVisible])
+    
+      const onConfirmTime = React.useCallback(
+        ({ hours, minutes }) => {
+          setTimeModalVisible(false);
+          setSelectedHour(hours);
+          setSelectedMinute(minutes);
+          //addChallenge();
+        },
+        [setTimeModalVisible, setSelectedHour, setSelectedMinute]
+      );
+
+
+      const onDismissDate = React.useCallback(() => {
+        setDateModalVisible(false);
+      }, [setDateModalVisible]);
+    
+      const onConfirmDate = React.useCallback(
+        (params) => {
+          setDateModalVisible(false);
+          setSelectedDate(params.date);
+        },
+        [setDateModalVisible, setSelectedDate]
+      );
+
+      */
 
 
     return (
@@ -43,7 +90,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
                     <Button 
                       style={styles.button}
                       title="Sfida"
-                      onPress={() => setModalVisible(true)}
+                      onPress={() => {setModalVisible(true), setDateModalVisible(true)}}
                     />
                     <Modal
                       visible={modalVisible}
@@ -61,13 +108,14 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
                         value={proposedPlace}
                         onChangeText={setProposedPlace}
                       />
+
+
                       <DateTimePicker
-                        value={selectedDate}
-                        mode="datetime"
-                        is24Hour={true}
-                        display="default"
-                        onChange={setSelectedDate}
-                      />
+                              mode="single"
+                              date={date}
+                              timePicker={true}
+                              onChange={(params) => setDate(params.date)}
+                            />
 
                       <Button
                         title="Invia sfida"
