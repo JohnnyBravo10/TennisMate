@@ -6,13 +6,13 @@ import ChallengeButton from './ChallengeButton'
 const SentChallenge = ({challenge, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
        <Text style={styles.challengeText}>
-           {challenge.challenged}
+           {challenge.usernameChallenged}
        </Text>
        <Text>
         {challenge.place}
        </Text>
        <Text>
-        {challenge.date_time}
+        {challenge.dateTime}
        </Text>
        <View style={styles.buttons}>
            <Text>{challenge.accepted ? "Accettata":"In attesa"}</Text>

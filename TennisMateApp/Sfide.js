@@ -14,7 +14,7 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     receivedChallenges = receivedChallenges.map((challenge) => {
         return (
             <ReceivedChallenge
-                {...props}
+                //{...props}
                 toggleAccepted={toggleAccepted}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
@@ -25,7 +25,7 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     sentChallenges = sentChallenges.map((challenge) => {
         return (
             <SentChallenge
-                {...props}
+                //{...props}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
                 challenge={challenge} />
@@ -36,9 +36,11 @@ return (
     <View>
            <View>
            <Text>Sfide ricevute</Text>
+           <View>{receivedChallenges}</View>
            </View>
            <View>
            <Text>Sfide inviate</Text>
+           <View>{sentChallenges}</View>
            </View>
        </View>
 )

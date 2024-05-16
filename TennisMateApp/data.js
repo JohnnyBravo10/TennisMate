@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USERs_KEY = '@users_';
 const CHALLENGEs_KEY = '@challenges_'
+let challengeIndex=0
 
 export const checkUser = async (username, password) => {
     let userOk= false
@@ -37,11 +38,11 @@ export const checkUser = async (username, password) => {
     sentChallenges = [];
     if (challenges.length!==0){
       challenges.forEach(challenge => {
-        if (challenge.challenger === username){
-            sentChallenges.append(challenge)
+        if (challenge.usernameChallenger === username){
+            sentChallenges.push(challenge)
         }
-        if (challenge.challenged === username){
-          receivedChallenges.append(challenge)
+        if (challenge.usernameChallenged === username){
+          receivedChallenges.push(challenge)
       }
       });
     }
@@ -136,7 +137,10 @@ export const addUser = async (username, password) => {
 export const addChallenge = async (usernameChallenger, usernameChallenged, dateTime, place) => {
   try {
     const challenges = await getChallenges();
-    challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false});
+    console.log("before pushing: ", challenges)
+    challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false, challengeIndex: challengeIndex});
+    challengeIndex++
+    console.log("after pushing: ", challenges)
     await saveChallenges(challenges);
   } catch (error) {
     console.error('Error adding challenge: ', error);

@@ -177,6 +177,8 @@ async toggleAccepted(challengeIndex) {
    const { username, password, authenticated, message,
             name, age, image, level, club, challenges} = this.state
 
+    console.log("challenges in state: ", challenges)
+
 
    return(
    <NavigationContainer>
@@ -251,6 +253,8 @@ async toggleAccepted(challengeIndex) {
                 username = {username}
                 getSuggestedUsers = {getSuggestedUsers}
                 addChallenge = {addChallenge}
+                findChallenges={findChallenges}
+                changeChallenges={this.changeChallenges}
             />
           )}
           </Tab.Screen>

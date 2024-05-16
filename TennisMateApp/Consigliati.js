@@ -6,7 +6,7 @@ import DateTimePicker from 'react-native-ui-datepicker';
 
 //import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates';
 
-const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
+const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
 
     const [modalVisible, setModalVisible] = useState(false)
@@ -24,6 +24,8 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
     */
 
     const [date, setDate] = useState(new Date());
+
+    console.log("initial date", date)
 
 
     useEffect(() => {
@@ -90,7 +92,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
                     <Button 
                       style={styles.button}
                       title="Sfida"
-                      onPress={() => {setModalVisible(true), setDateModalVisible(true)}}
+                      onPress={() => {setModalVisible(true)}}
                     />
                     <Modal
                       visible={modalVisible}
@@ -114,12 +116,12 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge}) => {
                               mode="single"
                               date={date}
                               timePicker={true}
-                              onChange={(params) => setDate(params.date)}
+                              onChange={(params) => setDate(new Date(params.date))}
                             />
 
                       <Button
                         title="Invia sfida"
-                        onPress={() => setModalVisible(false)}
+                        onPress={async () => {setModalVisible(false), addChallenge(username, user.username, date, proposedPlace), await changeChallenges(await findChallenges(username))}}
                       />
                       <Button
                         title="Annulla"
