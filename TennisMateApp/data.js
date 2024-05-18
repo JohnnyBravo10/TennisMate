@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const USERs_KEY = '@users_';
-const CHALLENGEs_KEY = '@challenges_'
-let challengeIndex=0
+const CHALLENGEs_KEY = '@challenges_1'
+
 
 export const checkUser = async (username, password) => {
     let userOk= false
@@ -137,10 +137,15 @@ export const addUser = async (username, password) => {
 export const addChallenge = async (usernameChallenger, usernameChallenged, dateTime, place) => {
   try {
     const challenges = await getChallenges();
-    console.log("before pushing: ", challenges)
-    challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false, challengeIndex: challengeIndex});
-    challengeIndex++
-    console.log("after pushing: ", challenges)
+    console.log("inserisco sfida a: ", usernameChallenged)
+    index = 0
+    challenges.forEach((challenge)=> {
+      if (challenge.challengeIndex>=index){
+        index = challenge.challengeIndex+1
+      }
+    })
+    challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false, challengeIndex: index});
+    //console.log("after pushing: ", challenges)
     await saveChallenges(challenges);
   } catch (error) {
     console.error('Error adding challenge: ', error);

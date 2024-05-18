@@ -1,32 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput} from 'react-native';
-//import DateTimePicker from '@react-native-community/datetimepicker';
-
 import DateTimePicker from 'react-native-ui-datepicker';
-
-//import { TimePickerModal, DatePickerModal } from 'react-native-paper-dates';
 
 const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
-
-    const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false);
     const [proposedPlace, setProposedPlace] = useState('');
-    
-
-    /*
-    const [dateModalVisible, setDateModalVisible] = useState(false)
-    const [selectedDate, setSelectedDate] = useState(new Date());
-   
-
-    const [timeModalVisible, setTimeModalVisible] = useState(false);
-    const [selectedHour, setSelectedHour] = useState(0);
-    const [selectedMinute, setSelectedMinute] = useState(0);
-    */
-
     const [date, setDate] = useState(new Date());
-
-    console.log("initial date", date)
-
+    const [selectedUser, setSelectedUser] = useState(null); // Stato per l'utente selezionato
 
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
@@ -41,39 +22,21 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
         fetchSuggestedUsers(); 
     }, [username, getSuggestedUsers]); 
 
+    const handleChallengePress = (user) => {
+        setSelectedUser(user); // Imposta l'utente selezionato
+        setModalVisible(true);
+    };
 
-
-      /*
-
-      const onDismissTime = React.useCallback(() => {
-        setTimeModalVisible(false)
-      }, [setTimeModalVisible])
-    
-      const onConfirmTime = React.useCallback(
-        ({ hours, minutes }) => {
-          setTimeModalVisible(false);
-          setSelectedHour(hours);
-          setSelectedMinute(minutes);
-          //addChallenge();
-        },
-        [setTimeModalVisible, setSelectedHour, setSelectedMinute]
-      );
-
-
-      const onDismissDate = React.useCallback(() => {
-        setDateModalVisible(false);
-      }, [setDateModalVisible]);
-    
-      const onConfirmDate = React.useCallback(
-        (params) => {
-          setDateModalVisible(false);
-          setSelectedDate(params.date);
-        },
-        [setDateModalVisible, setSelectedDate]
-      );
-
-      */
-
+    const handleSendChallenge = async () => {
+        if (selectedUser) {
+            await addChallenge(username, selectedUser.username, date, proposedPlace);
+            await changeChallenges(await findChallenges(username));
+            setModalVisible(false);
+            setProposedPlace('');
+            setDate(new Date());
+            setSelectedUser(null);
+        }
+    };
 
     return (
         <ScrollView>
@@ -92,42 +55,36 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                     <Button 
                       style={styles.button}
                       title="Sfida"
-                      onPress={() => {setModalVisible(true)}}
+                      onPress={() => handleChallengePress(user)}
                     />
                     <Modal
                       visible={modalVisible}
                       animationType="slide"
-                      //transparent={true}
                       onRequestClose={() => setModalVisible(false)}
                     >
-                      <View>
                       <View style={styles.inputContainer}>
+                        <TextInput
+                          style={styles.input}
+                          placeholder="Place"
+                          value={proposedPlace}
+                          onChangeText={(params) => setProposedPlace(params)}
+                        />
 
-                      <TextInput
-                        style={styles.input}
-                        placeholder="Place"
+                        <DateTimePicker
+                          mode="single"
+                          date={date}
+                          timePicker={true}
+                          onChange={(params) => setDate(new Date(params.date))}
+                        />
 
-                        value={proposedPlace}
-                        onChangeText={setProposedPlace}
-                      />
-
-
-                      <DateTimePicker
-                              mode="single"
-                              date={date}
-                              timePicker={true}
-                              onChange={(params) => setDate(new Date(params.date))}
-                            />
-
-                      <Button
-                        title="Invia sfida"
-                        onPress={async () => {setModalVisible(false), addChallenge(username, user.username, date, proposedPlace), await changeChallenges(await findChallenges(username))}}
-                      />
-                      <Button
-                        title="Annulla"
-                        onPress={() => setModalVisible(false)}
-                      />
-                      </View>
+                        <Button
+                          title="Invia sfida"
+                          onPress={handleSendChallenge}
+                        />
+                        <Button
+                          title="Annulla"
+                          onPress={() => setModalVisible(false)}
+                        />
                       </View>
                     </Modal>
                 </View>
@@ -138,8 +95,8 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
 
 const styles = StyleSheet.create({
     form: {
-      flexDirection: 'row', // Organizza i contenitori in orizzontale
-      justifyContent: 'space-between', // Spazio uniforme tra i contenitori
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       paddingHorizontal: 20,
       marginBottom: 20,
     },
@@ -172,12 +129,11 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     suggestedContainer:{
-      flexDirection: 'column', // Imposta la disposizione verticale
-      marginBottom: 20, // Spazio inferiore tra i contenitori suggeriti
-      borderWidth: 1, // Opzionale: aggiunge un bordo per visualizzare il contenitore
-      padding: 10, // Opzionale: aggiunge spazio interno al contenitore
+      flexDirection: 'column',
+      marginBottom: 20,
+      borderWidth: 1,
+      padding: 10,
     },
-
     button: {
       alignSelf: 'flex-end',
       padding: 7,
@@ -185,7 +141,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 4,
       marginRight: 5
-  },
-  });
+    },
+});
 
-export default Consigliati
+export default Consigliati;
