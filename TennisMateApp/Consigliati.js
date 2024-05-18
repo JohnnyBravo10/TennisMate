@@ -30,6 +30,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
     const handleSendChallenge = async () => {
         if (selectedUser) {
             await addChallenge(username, selectedUser.username, date, proposedPlace);
+            console.log("data: ",date)
             await changeChallenges(await findChallenges(username));
             setModalVisible(false);
             setProposedPlace('');

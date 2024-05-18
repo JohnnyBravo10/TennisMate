@@ -155,7 +155,9 @@ export const addChallenge = async (usernameChallenger, usernameChallenged, dateT
 export const removeChallenge = async (challengeId) => {
   try {
     const challenges = await getChallenges();
-    const updatedChallenges = challenges.filter(challenge => challenge.id !== challengeId);
+    console.log("prima del filtraggio:", challenges)
+    const updatedChallenges = challenges.filter(challenge => challenge.challengeIndex !== challengeId);
+    console.log("dopo il filtraggio:", updatedChallenges)
     await saveChallenges(updatedChallenges);
   } catch (error) {
     console.error('Error removing challenge:', error);

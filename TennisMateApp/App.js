@@ -140,15 +140,18 @@ changeChallenges(challenges){
 }
 
 async deleteChallenge(challengeIndex){
-  let { challenges } = this.state
-  received = challenges.received.filter((challenge) => challenge.challengeIndex !== challengeIndex)
-  sent = challenges.sent.filter((challenge) => challenge.challengeIndex !== challengeIndex)
-  this.setState({ challenges: {received: received, sent: sent} })
+  //let { challenges } = this.state
+  //received = challenges.received.filter((challenge) => challenge.challengeIndex !== challengeIndex)
+  //sent = challenges.sent.filter((challenge) => challenge.challengeIndex !== challengeIndex)
+  //this.setState({ challenges: {received: received, sent: sent} })
 
  try {
-   await removeChallenge(challengeIndex);
+    await removeChallenge(challengeIndex);
+    challenges = await (findChallenges(this.state.username));
+    console.log("sfide trovate:", challenges)
+    this.changeChallenges(challenges)
  } catch (error) {
-   console.error('Error deleting challenge:', error);
+    console.error('Error deleting challenge:', error);
  }   
 }
 

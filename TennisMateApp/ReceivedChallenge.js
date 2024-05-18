@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import ChallengeButton from './ChallengeButton'
 
 
+
 const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
        <Text style={styles.challengeText}>
