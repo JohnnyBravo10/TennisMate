@@ -132,7 +132,7 @@ async loadData(username){
 }
 
 updateUser(){
-updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.level, this.state.club)
+  updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.level, this.state.club)
 }
 
 changeChallenges(challenges){
@@ -215,22 +215,21 @@ async toggleAccepted(challengeIndex) {
 
 
 
- render(){
+render() {
+  const { username, password, authenticated, message,
+           name, age, image, level, club, challenges } = this.state;
 
-   const { username, password, authenticated, message,
-            name, age, image, level, club, challenges} = this.state
+  console.log("challenges in state: ", challenges);
 
-    console.log("challenges in state: ", challenges)
-
-
-   return(
-   <NavigationContainer>
-<Tab.Navigator tabBarOptions={{
+  return (
+    <NavigationContainer>
+      {authenticated ? (
+        <Tab.Navigator tabBarOptions={{
           showLabel: false, 
           style: { height: 60, backgroundColor: 'white' }, 
           tabStyle: { justifyContent: 'center', alignItems: 'center' }, 
         }}>
-<Tab.Screen name="📲​​"
+          <Tab.Screen name="📲​​"
             options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>📲​</Text>}}>
               {(props) => (
               <LoginScreen
@@ -243,65 +242,79 @@ async toggleAccepted(challengeIndex) {
                 message={message}
                 becomeAuthenticated={this.becomeAuthenticated}
                 setMessage={this.setMessage}
-                checkUser = {checkUser}
-                checkUsernameAvailability = {checkUsernameAvailability}
-                addUser = {addUser}
-                loadData = {this.loadData}
+                checkUser={checkUser}
+                checkUsernameAvailability={checkUsernameAvailability}
+                addUser={addUser}
+                loadData={this.loadData}
               />
             )}
-            </Tab.Screen>
+          </Tab.Screen>
 
-
-<Tab.Screen name="👤​" 
+          <Tab.Screen name="👤​" 
             options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>👤</Text>}}>
             {(props) => (
             <Profilo
-                {...props}
-                name={name}
-                age={age}
-                setName={this.nameChange}
-                setAge={this.ageChange}
-                image = {image}
-                setImage = {this.imageChange}
-                level={level}
-                setLevel={this.levelChange}
-                club = {club}
-                setClub = {this.clubChange}
-                updateUser = {this.updateUser}
+              {...props}
+              name={name}
+              age={age}
+              setName={this.nameChange}
+              setAge={this.ageChange}
+              image={image}
+              setImage={this.imageChange}
+              level={level}
+              setLevel={this.levelChange}
+              club={club}
+              setClub={this.clubChange}
+              updateUser={this.updateUser}
             />
           )}
           </Tab.Screen>
 
-<Tab.Screen name="🎾​​​"
-           options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>🎾​​</Text>}}>
+          <Tab.Screen name="🎾​​​"
+            options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>🎾​​</Text>}}>
             {(props) => (
             <Sfide
-                {...props}
-                challenges={challenges}
-                toggleAccepted={this.toggleAccepted}
-                deleteChallenge={this.deleteChallenge}
+              {...props}
+              challenges={challenges}
+              toggleAccepted={this.toggleAccepted}
+              deleteChallenge={this.deleteChallenge}
             />
           )}
           </Tab.Screen>
 
           <Tab.Screen name="👥​​​"
-           options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>👥​​</Text>}}>
+            options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>👥​​</Text>}}>
             {(props) => (
             <Consigliati
-                {...props}
-                username = {username}
-                getSuggestedUsers = {getSuggestedUsers}
-                addChallenge = {addChallenge}
-                findChallenges={findChallenges}
-                changeChallenges={this.changeChallenges}
+              {...props}
+              username={username}
+              getSuggestedUsers={getSuggestedUsers}
+              addChallenge={addChallenge}
+              findChallenges={findChallenges}
+              changeChallenges={this.changeChallenges}
             />
           )}
           </Tab.Screen>
-
-</Tab.Navigator>
-</NavigationContainer>
-   )
- }
+        </Tab.Navigator>
+      ) : (
+        <LoginScreen
+          username={username}
+          password={password}
+          setUsername={this.usernameChange}
+          setPassword={this.passwordChange}
+          authenticated={authenticated}
+          message={message}
+          becomeAuthenticated={this.becomeAuthenticated}
+          setMessage={this.setMessage}
+          checkUser={checkUser}
+          checkUsernameAvailability={checkUsernameAvailability}
+          addUser={addUser}
+          loadData={this.loadData}
+        />
+      )}
+    </NavigationContainer>
+  );
+}
 }
 
 

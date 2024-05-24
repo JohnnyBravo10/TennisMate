@@ -50,7 +50,9 @@ export const checkUser = async (username, password) => {
   };
 
   export const checkUsernameAvailability = async (username) => {
-    console.log("entrato")
+    if (username === ""){
+      return false
+    }
     let usernameAvailable = true
     const users = await getUsers();
     if (users.length!==0){
