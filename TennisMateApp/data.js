@@ -189,3 +189,17 @@ export const updateUserDetails = async (username, name, age, image, level, club)
     console.error('Error updating Users:', error);
   }
 };
+
+export const updateChallenge = async (challengeIndex, updatedChallenge) => {
+  try {
+    const challenges = await getChallenges();
+    console.log("challenge trovate in data: ", challenges)
+    const updatedChallenges = challenges.map(challenge =>
+      challenge.challengeIndex === challengeIndex ? { ...challenge, ...updatedChallenge } : challenge
+    );
+    console.log("challenge aggiornate in data: ", updatedChallenges)
+    await saveChallenges(updatedChallenges);
+  } catch (error) {
+    console.error('Error updating challenge:', error);
+  }
+};

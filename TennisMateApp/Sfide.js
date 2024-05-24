@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 
 import ReceivedChallenge from './ReceivedChallenge'
 import SentChallenge from './SentChallenge'
@@ -33,7 +33,7 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     })
 
 return (
-    <View>
+    <ScrollView>
            <View>
            <Text>Sfide ricevute</Text>
            <View>{receivedChallenges}</View>
@@ -42,7 +42,7 @@ return (
            <Text>Sfide inviate</Text>
            <View>{sentChallenges}</View>
            </View>
-       </View>
+       </ScrollView>
 )
 }
 

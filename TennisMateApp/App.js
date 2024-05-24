@@ -11,7 +11,7 @@ import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers, addChallenge} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers, addChallenge, updateChallenge} from './data';
 
 const Tab = createBottomTabNavigator();
 
@@ -155,24 +155,64 @@ async deleteChallenge(challengeIndex){
  }   
 }
 
+/*
 async toggleAccepted(challengeIndex) {
   try {
-    const { challenges } = this.state;
-    const updatedChallenges = Array.from(challenges).map(challenge => {
+    const receivedChallenges = this.state.challenges.received;
+    const updatedChallenges = receivedChallenges.map(challenge => {
       if (challenge.challengeIndex === challengeIndex) {
         // Toggle the 'complete' property
         return { ...challenge, accepted: !challenge.accepted };
       }
       return challenge;
     });
-    this.setState({ challenges: updatedChallenges });
+
+    this.setState({ received: updatedChallenges, sent: this.state.challenges.sent });
+
+    console.log("prima: ", receivedChallenges)
+    console.log("aggiornate: ", updatedChallenges)
+  
+
+    console.log("nuovo stato: ", !receivedChallenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted)
 
     // Persist updated TODOs to storage
-    await updateChallenge(challengeIndex, { accepted: !challenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted });
+    await updateChallenge(challengeIndex, { accepted: !receivedChallenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted });
+  } catch (error) {
+    console.error('Error updating challenges:', error);
+  }
+}*/
+
+async toggleAccepted(challengeIndex) {
+  try {
+    const receivedChallenges = this.state.challenges.received;
+    const updatedChallenges = receivedChallenges.map(challenge => {
+      if (challenge.challengeIndex === challengeIndex) {
+        // Toggle the 'accepted' property
+        return { ...challenge, accepted: !challenge.accepted };
+      }
+      return challenge;
+    });
+
+    this.setState({ 
+      challenges: {
+        received: updatedChallenges, 
+        sent: this.state.challenges.sent 
+      }
+    }, async () => {
+      // Calcola il nuovo valore 'accepted' dopo l'aggiornamento dello stato
+      const updatedChallenge = updatedChallenges.find(challenge => challenge.challengeIndex === challengeIndex);
+      console.log("prima: ", receivedChallenges);
+      console.log("aggiornate: ", updatedChallenges);
+      console.log("nuovo stato: ", updatedChallenge.accepted);
+
+      // Persist updated challenge to storage
+      await updateChallenge(challengeIndex, { accepted: updatedChallenge.accepted });
+    });
   } catch (error) {
     console.error('Error updating challenges:', error);
   }
 }
+
 
 
  render(){
@@ -231,10 +271,6 @@ async toggleAccepted(challengeIndex) {
             />
           )}
           </Tab.Screen>
-
-<Tab.Screen name="💬​​" component={Chat} options={{
-            tabBarIcon: () => <Text style={{ fontSize: 24 }}>💬</Text>, 
-          }}/>
 
 <Tab.Screen name="🎾​​​"
            options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>🎾​​</Text>}}>

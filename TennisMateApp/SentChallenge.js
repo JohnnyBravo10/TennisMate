@@ -12,7 +12,7 @@ const SentChallenge = ({challenge, deleteChallenge}) => (
         {challenge.place}
        </Text>
        <Text>
-        {challenge.dateTime}
+       {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
        <View style={styles.buttons}>
            <Text>{challenge.accepted ? "Accettata":"In attesa"}</Text>
