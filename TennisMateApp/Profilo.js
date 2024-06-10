@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Modal, Button} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 import NumericInput from 'react-native-numeric-input';
 
-const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub, updateUser}) => {
-
- const handleImagePicker = async () => {
-  console.log("beginning");
-  console.log(image.uri)
+const Profilo = ({name, setName, age, setAge, image, setImage, level, setLevel, club, setClub, updateUser, deleteUser}) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const handleImagePicker = async () => {
+    console.log("beginning");
+    console.log(image.uri)
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permissionResult.granted === false) {
       alert('Richiesto accesso a rullino');
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync();
+      const result = await ImagePicker.launchImageLibraryAsync();
     if (!result.canceled) {
       console.log("entrato nel secondo if")
       console.log(result);
@@ -89,6 +89,23 @@ return (
 <TouchableOpacity style={styles.button} onPress={updateUser}>
   <Text style={styles.buttonText}>Salva modifiche</Text>
 </TouchableOpacity>
+<TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
+  <Text style={styles.buttonText}>Elimina account</Text>
+</TouchableOpacity>
+<Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
+                      <View style={styles.inputContainer}>
+                      <Text style={styles.buttonText}>Sei sicuro di voler eliminare questo account?</Text>
+
+                        <Button
+                          title="Elimina"
+                          onPress={deleteUser}
+                        />
+                        <Button
+                          title="Annulla"
+                          onPress={() => setModalVisible(false)}
+                        />
+                      </View>
+                    </Modal>
 </View>
 );};
 

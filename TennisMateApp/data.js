@@ -166,6 +166,16 @@ export const removeChallenge = async (challengeId) => {
   }
 };
 
+export const removeUser = async (username) => {
+  try {
+    const users = await getUsers();
+    const updatedUsers = users.filter(user => user.username !== username);
+    await saveUsers(updatedUsers);
+  } catch (error) {
+    console.error('Error removing user:', error);
+  }
+};
+
 export const updateUserDetails = async (username, name, age, image, level, club) => {
   try {
     const users = await getUsers();

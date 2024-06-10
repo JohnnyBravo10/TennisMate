@@ -7,11 +7,10 @@ import LoginScreen from './Login'
 
 import Profilo from './Profilo';
 import Consigliati from './Consigliati';
-import Chat from './Chat';
 import Sfide from './Sfide'
 
 import React, { Component } from 'react';
-import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, getSuggestedUsers, addChallenge, updateChallenge} from './data';
+import {checkUser, checkUsernameAvailability, addUser, findUser, updateUserDetails, findChallenges, removeChallenge, removeUser, getSuggestedUsers, addChallenge, updateChallenge} from './data';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,6 +51,7 @@ class App extends Component {
    this.changeChallenges = this.changeChallenges.bind(this)
    this.toggleAccepted = this.toggleAccepted.bind(this)
    this.deleteChallenge = this.deleteChallenge.bind(this)
+   this.deleteUser = this.deleteUser.bind(this)
  }
 
 
@@ -150,6 +150,18 @@ async deleteChallenge(challengeIndex){
     challenges = await (findChallenges(this.state.username));
     console.log("sfide trovate:", challenges)
     this.changeChallenges(challenges)
+ } catch (error) {
+    console.error('Error deleting challenge:', error);
+ }   
+}
+
+async deleteUser(){
+
+ try {
+    await removeUser(this.state.username);
+    this.usernameChange('')
+    this.becomeAuthenticated(false);
+    this.setMessage("Autenticarsi o registrare un nuovo utente")
  } catch (error) {
     console.error('Error deleting challenge:', error);
  }   
@@ -266,6 +278,7 @@ render() {
               club={club}
               setClub={this.clubChange}
               updateUser={this.updateUser}
+              deleteUser={this.deleteUser}
             />
           )}
           </Tab.Screen>
