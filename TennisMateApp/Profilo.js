@@ -55,7 +55,7 @@ return (
       <View style={styles.inputContainer}>
         <TouchableOpacity style={styles.inputContainer} onPress={handleImagePicker}>
           <Text style={styles.placeholder}>Image</Text>
-            {image ? (<Image source={{ uri: image }} style={styles.image} />) : (<Text style={styles.placeholder}>Select an Image</Text>)}
+            {image ? (<Image source={{uri:image}} style={styles.image} />) : (<Image source={require('./assets/profile.png')} style={styles.image}/>)}
         </TouchableOpacity>
       </View>
     </View>
@@ -125,26 +125,27 @@ return (
       </View>
     </View>
   </View>
-<TouchableOpacity style={[styles.button, isSmallScreen ? styles.buttonSmall : styles.buttonLarge]} onPress={updateUser}>
-  <Text style={styles.buttonText}>Salva modifiche</Text>
-</TouchableOpacity>
-<TouchableOpacity style={[styles.button, isSmallScreen ? styles.buttonSmall : styles.buttonLarge]} onPress={() => setModalVisible(true)}>
-  <Text style={styles.buttonText}>Elimina account</Text>
-</TouchableOpacity>
-<Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
-                      <View style={styles.inputContainer}>
-                      <Text style={styles.buttonText}>Sei sicuro di voler eliminare questo account?</Text>
-
-                        <Button
-                          title="Elimina"
-                          onPress={deleteUser}
-                        />
-                        <Button
-                          title="Annulla"
-                          onPress={() => setModalVisible(false)}
-                        />
-                      </View>
-                    </Modal>
+  <View style={[styles.buttonContainer, isSmallScreen ? styles.buttonContainerSmall : styles.buttonContainerLarge]}>
+        <TouchableOpacity style={[styles.button,  isSmallScreen ? styles.buttonSmall : styles.buttonLarge]} onPress={updateUser}>
+          <Text style={styles.buttonText}>Salva modifiche</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button,  isSmallScreen ? styles.buttonSmall : styles.buttonLarge]} onPress={() => setModalVisible(true)}>
+          <Text style={styles.buttonText}>Elimina account</Text>
+        </TouchableOpacity>
+      </View>
+      <Modal visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.buttonText}>Sei sicuro di voler eliminare questo account?</Text>
+          <Button
+            title="Elimina"
+            onPress={deleteUser}
+          />
+          <Button
+            title="Annulla"
+            onPress={() => setModalVisible(false)}
+          />
+        </View>
+      </Modal>
 </ScrollView>
 );};
 
@@ -170,9 +171,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f0f0f0',
     borderRadius: 5,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#ccc',
-    marginHorizontal: 5,
+    marginHorizontal: 30,
     marginVertical: 5,
     padding: 10,
   },
@@ -207,12 +208,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   picker: {
-    width: '100%',
+    width: '70%',
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
     backgroundColor: '#f0f0f0',
+    ///backgroundColor: '#f0f0f0',
   },
   option:{
     borderWidth: 1,
@@ -226,6 +228,18 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     marginBottom: 10,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonContainerSmall: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  buttonContainerLarge: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   button: {
     backgroundColor: 'blue',
     borderRadius: 5,
@@ -236,13 +250,11 @@ const styles = StyleSheet.create({
   },
   buttonSmall: {
     width: '80%',
-    height: 50,
-    backgroundColor: 'blue',
+    marginVertical: 5,
   },
   buttonLarge: {
-    width: 300, // Larghezza massima per schermi larghi
-    height: 50,
-    backgroundColor: 'blue',
+    width: '35%',
+    marginVertical: 5,
   },
   buttonText: {
     color: 'white',
@@ -250,7 +262,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   message:{
-    fontSize: 15, fontWeight: 'bold'
+    fontSize: 15, fontWeight: 'bold', marginLeft: '5%'
   }
 });
 

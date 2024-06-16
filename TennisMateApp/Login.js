@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, useWindowDimensions, Image, ScrollView } from 'react-native';
 
-const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, setProfileMessage, checkUser, checkUsernameAvailability, addUser, loadData }) => {
+const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, setProfileMessage, checkUser, checkUsernameAvailability, addUser, loadData, setImage }) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 375;
 
@@ -20,10 +20,11 @@ const LoginScreen = ({ username, password, setUsername, setPassword, authenticat
 
   const handleSignin = async () => {
     if (await checkUsernameAvailability(username) === true) {
-      addUser(username, password);
+      await addUser(username, password);
       becomeAuthenticated(true);
       setMessage("Benvenuto " + username);
-      setProfileMessage("Dicci qualcosa di te")
+      setProfileMessage("Dicci qualcosa di te");
+      setImage('assets/profile.jpg')
       loadData(username);
     } else {
       becomeAuthenticated(false);

@@ -145,6 +145,7 @@ async loadData(username){
   this.ageChange(user.age);
   }
   if(user.image){
+    //console.log("entrato nell' if")
   this.imageChange(user.image);
   }
   if(user.levelForehand){
@@ -302,6 +303,7 @@ render() {
                 checkUsernameAvailability={checkUsernameAvailability}
                 addUser={addUser}
                 loadData={this.loadData}
+                setImage={this.imageChange}
               />
             )}
           </Tab.Screen>
@@ -377,6 +379,7 @@ render() {
           checkUsernameAvailability={checkUsernameAvailability}
           addUser={addUser}
           loadData={this.loadData}
+          setImage={this.imageChange}
         />
       )}
     </NavigationContainer>

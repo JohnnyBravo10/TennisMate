@@ -129,7 +129,8 @@ export const saveChallenges = async (challenges) => {
 export const addUser = async (username, password) => {
   try {
     const users = await getUsers();
-    users.push({username: username, password: password, image: 'assets/profile.jpg'});
+    users.push({username: username, password: password});
+    console.log("users after pushing", users)
     await saveUsers(users);
   } catch (error) {
     console.error('Error adding user:', error);
