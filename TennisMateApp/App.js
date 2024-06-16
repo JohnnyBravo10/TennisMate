@@ -160,6 +160,7 @@ async deleteUser(){
  try {
     await removeUser(this.state.username);
     this.usernameChange('')
+    this.passwordChange('')
     this.becomeAuthenticated(false);
     this.setMessage("Autenticarsi o registrare un nuovo utente")
  } catch (error) {
