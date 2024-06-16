@@ -26,8 +26,13 @@ class App extends Component {
      name:'',
      age:0,
      image:'',
-     level:0,
+     levelForehand:0,
+     levelBackhand:0,
+     levelVolee:0,
+     levelService:0,
+
      club:'',
+     surface:'',
 
      challenges:{received:[], sent:[]},
      
@@ -43,8 +48,12 @@ class App extends Component {
    this.nameChange = this.nameChange.bind(this);
    this.ageChange = this.ageChange.bind(this);
    this.imageChange = this.imageChange.bind(this);
-   this.levelChange = this.levelChange.bind(this);
+   this.levelForehandChange = this.levelForehandChange.bind(this);
+   this.levelBackhandChange = this.levelBackhandChange.bind(this);
+   this.levelVoleeChange = this.levelVoleeChange.bind(this);
+   this.levelServiceChange = this.levelServiceChange.bind(this);
    this.clubChange = this.clubChange.bind(this);
+   this.surfaceChange = this.surfaceChange.bind(this);
 
    this.updateUser = this.updateUser.bind(this);
 
@@ -82,11 +91,23 @@ ageChange(age){
 imageChange(image){
   this.setState({image})
 }
-levelChange(level){
-  this.setState({level})
+levelForehandChange(levelForehand){
+  this.setState({levelForehand})
+}
+levelBackhandChange(levelBackhand){
+  this.setState({levelBackhand})
+}
+levelVoleeChange(levelVolee){
+  this.setState({levelVolee})
+}
+levelServiceChange(levelService){
+  this.setState({levelService})
 }
 clubChange(club){
   this.setState({club})
+}
+surfaceChange(surface){
+  this.setState({surface})
 }
 
 resetDetails(){
@@ -94,8 +115,12 @@ resetDetails(){
   this.setState({name: '',
     age: 0,
     image: '',
-    level: 0,
+    levelForehand: 0,
+    levelBackhand: 0,
+    levelVolee: 0,
+    levelService: 0,
     club: '',
+    surface:'',
 
     challenges: {received:[], sent:[]},
   })
@@ -117,11 +142,23 @@ async loadData(username){
   if(user.image){
   this.imageChange(user.image);
   }
-  if(user.level){
-  this.levelChange(user.level);
+  if(user.levelForehand){
+  this.levelForehandChange(user.levelForehand);
+  }
+  if(user.levelBackhand){
+    this.levelBackhandChange(user.levelBackhand);
+  }
+  if(user.levelVolee){
+    this.levelVoleeChange(user.levelVolee);
+  }
+  if(user.levelService){
+    this.levelServiceChange(user.levelService);
   }
   if(user.club){
   this.clubChange(user.club);
+  }
+  if(user.surface){
+    this.surfaceChange(user.surface);
   }
 
   challenges = await (findChallenges(username));
@@ -132,7 +169,7 @@ async loadData(username){
 }
 
 updateUser(){
-  updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.level, this.state.club)
+  updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.levelForehand, this.state.levelBackhand, this.state.levelVolee, this.state.levelService, this.state.club, this.state.surface)
 }
 
 changeChallenges(challenges){
@@ -230,7 +267,7 @@ async toggleAccepted(challengeIndex) {
 
 render() {
   const { username, password, authenticated, message,
-           name, age, image, level, club, challenges } = this.state;
+           name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface, challenges } = this.state;
 
   console.log("challenges in state: ", challenges);
 
@@ -274,10 +311,18 @@ render() {
               setAge={this.ageChange}
               image={image}
               setImage={this.imageChange}
-              level={level}
-              setLevel={this.levelChange}
+              levelForehand={levelForehand}
+              levelBackhand={levelBackhand}
+              levelVolee={levelVolee}
+              levelService={levelService}
+              setLevelForehand={this.levelForehandChange}
+              setLevelBackhand={this.levelBackhandChange}
+              setLevelVolee={this.levelVoleeChange}
+              setLevelService={this.levelServiceChange}
               club={club}
               setClub={this.clubChange}
+              surface={surface}
+              setSurface={this.surfaceChange}
               updateUser={this.updateUser}
               deleteUser={this.deleteUser}
             />

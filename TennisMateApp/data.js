@@ -85,7 +85,7 @@ export const getSuggestedUsers = async (username) => {
     const suggestedUsers = [];
     allUsers.forEach(otherUser => {
       if (user.username !== otherUser.username){
-        if (!otherUser.level|| (user.level<= (otherUser.level +2) && user.level >= (otherUser.level -2)) ){
+        if (!otherUser.level|| (user.level<= (otherUser.level +2) && user.level >= (otherUser.level -2)) || (user.age<= (otherUser.age * 1.25) && user.age >= (otherUser.age * 0.75)) ){
           suggestedUsers.push(otherUser)
         }
       }
@@ -176,19 +176,28 @@ export const removeUser = async (username) => {
   }
 };
 
-export const updateUserDetails = async (username, name, age, image, level, club) => {
+export const updateUserDetails = async (username, name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface) => {
   try {
     const users = await getUsers();
     console.log("starting updating")
     console.log(users)
+    level = 0
+    if (Number(levelForehand) && Number(levelBackhand) && Number(levelVolee) && Number(levelService)){
+      level = (Number(levelForehand) + Number(levelBackhand) + Number(levelVolee) + Number(levelService))/4
+    }
     const updatedUsers = users.map(user =>
       {
       if (user.username === username){
         user.name = name
-        user.age = age
+        user.age = Number(age)
         user.image = image
+        user.levelForehand = Number(levelForehand)
+        user.levelBackhand = Number(levelBackhand)
+        user.levelVolee = Number(levelVolee)
+        user.levelService = Number(levelService)
         user.level = level
         user.club = club
+        user.surface = surface
       }
       return user
       }

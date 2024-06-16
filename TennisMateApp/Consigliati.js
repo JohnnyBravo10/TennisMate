@@ -47,10 +47,12 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                     <Text>{user.name}</Text>
                     <Text style={styles.placeholder}>Età</Text>
                     <Text>{user.age}</Text>
-                    <Text style={styles.placeholder}>Livello</Text>
+                    <Text style={styles.placeholder}>Livello medio</Text>
                     <Text>{user.level}</Text>
                     <Text style={styles.placeholder}>Circolo preferito</Text>
                     <Text>{user.club}</Text>
+                    <Text style={styles.placeholder}>Superficie preferita</Text>
+                    <Text>{user.surface}</Text>
                     <Image source={{ uri: user.image }} style={styles.image} />
 
                     <Button 
