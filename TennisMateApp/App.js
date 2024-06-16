@@ -22,6 +22,7 @@ class App extends Component {
      password:'',
      authenticated: false,
      message:'Autenticarsi o registrare un nuovo utente',
+     profileMessage:'',
      
      name:'',
      age:0,
@@ -41,6 +42,7 @@ class App extends Component {
    this.passwordChange = this.passwordChange.bind(this);
    this.becomeAuthenticated = this.becomeAuthenticated.bind(this)
    this.setMessage = this.setMessage.bind(this)
+   this.setProfileMessage = this.setProfileMessage.bind(this)
 
    this.resetDetails = this.resetDetails.bind(this)
    this.loadData = this.loadData.bind(this)
@@ -75,6 +77,9 @@ becomeAuthenticated(authenticated){
 }
 setMessage(message){
   this.setState({message})
+}
+setProfileMessage(profileMessage){
+  this.setState({profileMessage})
 }
 
 
@@ -266,7 +271,7 @@ async toggleAccepted(challengeIndex) {
 
 
 render() {
-  const { username, password, authenticated, message,
+  const { username, password, authenticated, message, profileMessage,
            name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface, challenges } = this.state;
 
   console.log("challenges in state: ", challenges);
@@ -292,6 +297,7 @@ render() {
                 message={message}
                 becomeAuthenticated={this.becomeAuthenticated}
                 setMessage={this.setMessage}
+                setProfileMessage={this.setProfileMessage}
                 checkUser={checkUser}
                 checkUsernameAvailability={checkUsernameAvailability}
                 addUser={addUser}
@@ -325,6 +331,7 @@ render() {
               setSurface={this.surfaceChange}
               updateUser={this.updateUser}
               deleteUser={this.deleteUser}
+              profileMessage={profileMessage}
             />
           )}
           </Tab.Screen>
@@ -365,6 +372,7 @@ render() {
           message={message}
           becomeAuthenticated={this.becomeAuthenticated}
           setMessage={this.setMessage}
+          setProfileMessage={this.setProfileMessage}
           checkUser={checkUser}
           checkUsernameAvailability={checkUsernameAvailability}
           addUser={addUser}

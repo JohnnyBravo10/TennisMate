@@ -3,9 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Modal, Butt
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 
-import NumericInput from 'react-native-numeric-input';
-
-const Profilo = ({name, setName, age, setAge, image, setImage, levelForehand, levelBackhand, levelVolee, levelService, setLevelForehand, setLevelBackhand, setLevelVolee, setLevelService, club, setClub, surface, setSurface, updateUser, deleteUser}) => {
+const Profilo = ({name, setName, age, setAge, image, setImage, levelForehand, levelBackhand, levelVolee, levelService, setLevelForehand, setLevelBackhand, setLevelVolee, setLevelService, club, setClub, surface, setSurface, updateUser, deleteUser, profileMessage}) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 690; 
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +29,7 @@ const Profilo = ({name, setName, age, setAge, image, setImage, levelForehand, le
 return (
 <ScrollView>
   <Text style={styles.title}>Profilo</Text>
+  <Text style={styles.message}>{profileMessage}</Text>
   <View style={[styles.form, isSmallScreen ? styles.formStretto : styles.formLargo]}>
     <View style={styles.section}>
       <Text style={styles.subtitle}>Dati</Text>
@@ -48,7 +47,7 @@ return (
         <TextInput
           style={styles.input}
           placeholder="Età"
-          value={age}
+          value={String(age)}
           onChangeText={setAge}
           keyboardType='numeric'
         />
@@ -68,7 +67,7 @@ return (
       <Text style={styles.placeholder}>Dritto</Text>
         <TextInput
         style={styles.input}
-        value={levelForehand}
+        value={String(levelForehand)}
         onChangeText={setLevelForehand}
         placeholder="Inserisci il tuo livello"
         keyboardType='numeric'
@@ -76,7 +75,7 @@ return (
       <Text style={styles.placeholder}>Rovescio</Text>
         <TextInput
         style={styles.input}
-        value={levelBackhand}
+        value={String(levelBackhand)}
         onChangeText={setLevelBackhand}
         placeholder="Inserisci il tuo livello"
         keyboardType='numeric'
@@ -84,7 +83,7 @@ return (
       <Text style={styles.placeholder}>Volee</Text>
         <TextInput
         style={styles.input}
-        value={levelVolee}
+        value={String(levelVolee)}
         onChangeText={setLevelVolee}
         placeholder="Inserisci il tuo livello"
         keyboardType='numeric'
@@ -92,7 +91,7 @@ return (
       <Text style={styles.placeholder}>Servizio</Text>
         <TextInput
         style={styles.input}
-        value={levelService}
+        value={String(levelService)}
         onChangeText={setLevelService}
         placeholder="Inserisci il tuo livello"
         keyboardType='numeric'
@@ -197,7 +196,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   input: {
-    width: '100%',
+    width: '70%',
     height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -250,6 +249,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  message:{
+    fontSize: 15, fontWeight: 'bold'
+  }
 });
 
 export default Profilo;
