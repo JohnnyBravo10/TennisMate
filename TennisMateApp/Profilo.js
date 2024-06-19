@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Modal, Butt
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 
+import MapView from 'react-native-maps';
+
 const Profilo = ({name, setName, age, setAge, image, setImage, levelForehand, levelBackhand, levelVolee, levelService, setLevelForehand, setLevelBackhand, setLevelVolee, setLevelService, club, setClub, surface, setSurface, updateUser, deleteUser, profileMessage}) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 690; 
