@@ -1,8 +1,18 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Linking} from 'react-native'
 import ChallengeButton from './ChallengeButton'
 
+import getCurrentLocation from './getCurrentPosition'
 
+const goTo = async (clubName) => {
+    console.log("calcoliamo il percorso")
+    position = await getCurrentLocation()
+    console.log("posizione", position)
+    //console.log("latitudde", position.coords.latitude)
+    const url = `https://www.google.com/maps/dir/${position.latitude},${position.longitude}/${clubName.replace(/ /g, '+')}`;
+    console.log(url)
+    Linking.openURL(url).catch((err) => console.error('Errore durante l\'apertura del link:', err));
+};
 
 const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
@@ -25,6 +35,10 @@ const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
                name='Accetta'
                accept={(challenge.accepted)}
                onPress={() => toggleAccepted(challenge.challengeIndex)} />
+
+            <ChallengeButton
+               name='Vai'
+               onPress={() => goTo(challenge.place)} />
            <ChallengeButton
                name='Elimina'
                onPress={ () => deleteChallenge(challenge.challengeIndex)} />
@@ -64,6 +78,11 @@ const styles = StyleSheet.create({
        alignItems: 'center',
        flexWrap: 'wrap'
    },
+   link: {
+    marginLeft: 10,
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
 
 })
 
