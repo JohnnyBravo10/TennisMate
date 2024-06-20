@@ -137,37 +137,37 @@ resetDetails(){
 
 async loadData(username){
   this.resetDetails();
-  user = await (findUser(username));
-  if(user.name){
-  this.nameChange(user.name);
+  let u = await (findUser(username));
+  if(u.name){
+  this.nameChange(u.name);
   }
-  if(user.age){
-  this.ageChange(user.age);
+  if(u.age){
+  this.ageChange(u.age);
   }
-  if(user.image){
+  if(u.image){
     //console.log("entrato nell' if")
-  this.imageChange(user.image);
+  this.imageChange(u.image);
   }
-  if(user.levelForehand){
-  this.levelForehandChange(user.levelForehand);
+  if(u.levelForehand){
+  this.levelForehandChange(u.levelForehand);
   }
-  if(user.levelBackhand){
-    this.levelBackhandChange(user.levelBackhand);
+  if(u.levelBackhand){
+    this.levelBackhandChange(u.levelBackhand);
   }
-  if(user.levelVolee){
-    this.levelVoleeChange(user.levelVolee);
+  if(u.levelVolee){
+    this.levelVoleeChange(u.levelVolee);
   }
-  if(user.levelService){
-    this.levelServiceChange(user.levelService);
+  if(u.levelService){
+    this.levelServiceChange(u.levelService);
   }
-  if(user.club){
-  this.clubChange(user.club);
+  if(u.club){
+  this.clubChange(u.club);
   }
-  if(user.surface){
-    this.surfaceChange(user.surface);
+  if(u.surface){
+    this.surfaceChange(u.surface);
   }
 
-  challenges = await (findChallenges(username));
+  let challenges = await (findChallenges(username));
   console.log("sfide trovate:", challenges)
   this.changeChallenges(challenges)
 
@@ -280,10 +280,10 @@ render() {
   return (
     <NavigationContainer>
       {authenticated ? (
-        <Tab.Navigator tabBarOptions={{
-          showLabel: false, 
-          style: { height: 60, backgroundColor: 'white' }, 
-          tabStyle: { justifyContent: 'center', alignItems: 'center' }, 
+        <Tab.Navigator screenOptions={{
+          tabBarShowLabel: false, 
+          tabBarStyle: [{ height: 60, backgroundColor: 'white', display: 'flex'}, null] ,
+          tabBarItemStyle: { justifyContent: 'center', alignItems: 'center' }, 
         }}>
           <Tab.Screen name="📲​​"
             options={{tabBarIcon: () => <Text style={{ fontSize: 24 }}>📲​</Text>}}>

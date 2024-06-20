@@ -1,21 +1,28 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import ChallengeButton from './ChallengeButton'
+
+import {getProfilePicture} from './data'
 
 
 const SentChallenge = ({challenge, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
+    <View>
+    <Text style={styles.challengeText}> 
+         👤{challenge.usernameChallenged}
+       </Text>
        <Text style={styles.challengeText}>
-           {challenge.usernameChallenged}
+       📍{challenge.place}
        </Text>
-       <Text>
-        {challenge.place}
+       <Text style={styles.challengeText}>
+       📅 {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
-       <Text>
-       {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
+       <Text style={styles.challengeText}>
+       🕣 {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
+       </View>
        <View style={styles.buttons}>
-           <Text>{challenge.accepted ? "Accettata":"In attesa"}</Text>
+           <Text style={styles.statusChallenge}>{challenge.accepted ? "Accettata!":"In attesa"}</Text>
            <ChallengeButton
                name='Elimina'
                onPress={ () => deleteChallenge(challenge.challengeIndex)} />
@@ -41,17 +48,36 @@ const styles = StyleSheet.create({
        shadowColor: '#000000',
        shadowOffset: { width: 2, height: 2},
        flexDirection: 'row',
-       alignItems: 'center'
+       alignItems: 'center',
+       flexWrap: 'wrap',
    },
    challengeText: {
        fontSize: 17
    },
+
+   statusChallenge: {
+    alignSelf: 'flex-end',
+    padding: 7,
+    borderColor: '#ededed',
+    borderWidth: 0,
+    borderRadius: 4,
+    marginRight: 5,
+    fontSize: 12
+},
    buttons: {
        flex: 1,
        flexDirection: 'row',
        justifyContent: 'flex-end',
-       alignItems: 'center'
-   }
+       alignItems: 'center',
+       flexWrap: 'wrap',
+   },
+
+   miniImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'cover',
+    marginBottom: 10,
+  },
 })
 
 

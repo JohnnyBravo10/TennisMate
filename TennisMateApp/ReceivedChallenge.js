@@ -6,15 +6,20 @@ import ChallengeButton from './ChallengeButton'
 
 const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
+       <View>
+       <Text style={styles.challengeText} >
+       👤{challenge.usernameChallenger}
+       </Text>
        <Text style={styles.challengeText}>
-           {challenge.usernameChallenger}
+       📍{challenge.place}
+       </Text>
+       <Text style={styles.challengeText}>
+       📅 {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
        <Text>
-        {challenge.place}
+       🕣 {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
-       <Text>
-        {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
-       </Text>
+       </View>
        <View style={styles.buttons}>
            <ChallengeButton
                name='Accetta'
@@ -45,7 +50,8 @@ const styles = StyleSheet.create({
        shadowColor: '#000000',
        shadowOffset: { width: 2, height: 2},
        flexDirection: 'row',
-       alignItems: 'center'
+       alignItems: 'center',
+       flexWrap: 'wrap',
    },
    challengeText: {
        fontSize: 17
@@ -54,7 +60,8 @@ const styles = StyleSheet.create({
        flex: 1,
        flexDirection: 'row',
        justifyContent: 'flex-end',
-       alignItems: 'center'
+       alignItems: 'center',
+       flexWrap: 'wrap'
    }
 })
 

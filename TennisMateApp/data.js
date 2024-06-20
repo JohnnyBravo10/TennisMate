@@ -32,6 +32,13 @@ export const checkUser = async (username, password) => {
     return foundUser
   };
 
+  export const getProfilePicture = async (username) =>{
+    console.log("cerco foto profilo")
+    const user = findUser(username);
+    return user.image
+    
+  }
+
   export const findChallenges = async (username) => {
     const challenges = await getChallenges();
     receivedChallenges = [];

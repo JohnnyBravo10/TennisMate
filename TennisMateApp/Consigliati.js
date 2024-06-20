@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput} from 'react-native';
+import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput, TouchableOpacity, Linking} from 'react-native';
 import DateTimePicker from 'react-native-ui-datepicker';
 
 const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges}) => {
@@ -39,8 +39,15 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
         }
     };
 
+    const openLink = (clubName) => {
+      const url = `https://www.google.com/maps/search/${clubName.replace(/ /g, '+')}`;
+      console.log(url)
+      Linking.openURL(url).catch((err) => console.error('Errore durante l\'apertura del link:', err));
+  };
+
     return (
         <ScrollView>
+          <Text style={styles.title}>Utenti consigliati</Text>
             {suggestedUsers.map((user, index) => (
                 <View key={index} style={styles.suggestedContainer}>
                     <Text style={styles.placeholder}>Nome</Text>
@@ -49,8 +56,13 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                     <Text>{user.age}</Text>
                     <Text style={styles.placeholder}>Livello medio</Text>
                     <Text>{user.level}</Text>
-                    <Text style={styles.placeholder}>Circolo preferito</Text>
-                    <Text>{user.club}</Text>
+                        <Text style={styles.placeholder}>Circolo preferito</Text>
+                        <View style={styles.inlineContainer}>
+                        <Text>{user.club}</Text>
+                        <TouchableOpacity onPress={() => openLink(user.club)}>
+                            <Text style={styles.link}>Vedi su mappa</Text>
+                        </TouchableOpacity>
+                    </View>
                     <Text style={styles.placeholder}>Superficie preferita</Text>
                     <Text>{user.surface}</Text>
                     <Image source={{ uri: user.image }} style={styles.image} />
@@ -131,11 +143,22 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
       marginBottom: 10,
     },
+    title: {
+      fontSize: 28,
+      fontWeight: 'bold',
+      marginBottom: 10,
+      marginLeft: '5%'
+    },
     suggestedContainer:{
       flexDirection: 'column',
       marginBottom: 20,
-      borderWidth: 1,
       padding: 10,
+      backgroundColor: '#f0f0f0',
+      borderRadius: 5,
+      borderWidth: 3,
+      borderColor: '#ccc',
+      marginHorizontal: 18,
+      marginVertical: 5
     },
     button: {
       alignSelf: 'flex-end',
@@ -144,6 +167,16 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 4,
       marginRight: 5
+    },
+    inlineContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 5,
+    },
+    link: {
+      marginLeft: 10,
+      color: 'blue',
+      textDecorationLine: 'underline',
     },
 });
 
