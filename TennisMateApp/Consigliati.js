@@ -50,22 +50,33 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
           <Text style={styles.title}>Utenti consigliati</Text>
             {suggestedUsers.map((user, index) => (
                 <View key={index} style={styles.suggestedContainer}>
+                  <View style={styles.field}>
                     <Text style={styles.placeholder}>Nome</Text>
-                    <Text>{user.name}</Text>
+                    <Text style={styles.text}>{user.name}</Text>
+                    </View>
+                    <View style={styles.field}>
                     <Text style={styles.placeholder}>Età</Text>
                     <Text>{user.age}</Text>
+                    </View>
+                    <View style={styles.field}>
                     <Text style={styles.placeholder}>Livello medio</Text>
                     <Text>{user.level}</Text>
-                        <Text style={styles.placeholder}>Circolo preferito</Text>
-                        <View style={styles.inlineContainer}>
-                        <Text>{user.club}</Text>
-                        <TouchableOpacity onPress={() => openLink(user.club)}>
-                            <Text style={styles.link}>Vedi su mappa</Text>
-                        </TouchableOpacity>
                     </View>
+                    <View style={styles.field}>
+                    <View style={styles.inlineContainer}>                        
+                      <Text style={styles.placeholder}>Circolo preferito</Text>
+                      <TouchableOpacity onPress={() => openLink(user.club)}>
+                        <Text style={styles.link}>Vedi su mappa</Text>
+                      </TouchableOpacity>
+                      </View>
+                    <Text style={styles.text}>{user.club}</Text>
+                    </View>
+                        
+                    <View style={styles.field}>
                     <Text style={styles.placeholder}>Superficie preferita</Text>
                     <Text>{user.surface}</Text>
-                    <Image source={{ uri: user.image }} style={styles.image} />
+                    {user.image ? (<Image source={{ uri: user.image }} style={styles.image} />) : (<Image source={require('./assets/profile.png')} style={styles.image} />)}
+                    </View>
 
                     <Button 
                       style={styles.button}
@@ -125,7 +136,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
     },
     placeholder: {
-      marginBottom: 5,
+      //marginBottom: 5,
       fontSize: 16,
       color: '#888',
     },
@@ -148,6 +159,9 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 10,
       marginLeft: '5%'
+    },
+    field:{
+      marginVertical: 3
     },
     suggestedContainer:{
       flexDirection: 'column',
@@ -177,6 +191,9 @@ const styles = StyleSheet.create({
       marginLeft: 10,
       color: 'blue',
       textDecorationLine: 'underline',
+    },
+    text: {
+      flexWrap: 'wrap',
     },
 });
 

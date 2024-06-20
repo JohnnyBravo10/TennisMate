@@ -8,16 +8,16 @@ const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
        <View>
        <Text style={styles.challengeText} >
-       👤{challenge.usernameChallenger}
+       👤   {challenge.usernameChallenger}
        </Text>
        <Text style={styles.challengeText}>
-       📍{challenge.place}
+       📍   {challenge.place}
        </Text>
        <Text style={styles.challengeText}>
-       📅 {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
+       📅   {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
        <Text>
-       🕣 {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
+       🕣   {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
        </View>
        <View style={styles.buttons}>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
        flexWrap: 'wrap',
    },
    challengeText: {
-       fontSize: 17
+       fontSize: 17,
+       flexWrap: 'wrap',
    },
    buttons: {
        flex: 1,
@@ -62,7 +63,8 @@ const styles = StyleSheet.create({
        justifyContent: 'flex-end',
        alignItems: 'center',
        flexWrap: 'wrap'
-   }
+   },
+
 })
 
 

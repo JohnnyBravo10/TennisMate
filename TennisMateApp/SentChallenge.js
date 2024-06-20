@@ -7,18 +7,18 @@ import {getProfilePicture} from './data'
 
 const SentChallenge = ({challenge, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
-    <View>
+    <View style={styles.challengeData}>
     <Text style={styles.challengeText}> 
-         👤{challenge.usernameChallenged}
+        👤  {challenge.usernameChallenged}
        </Text>
        <Text style={styles.challengeText}>
-       📍{challenge.place}
+       📍   {challenge.place}
        </Text>
        <Text style={styles.challengeText}>
-       📅 {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
+       📅   {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
        <Text style={styles.challengeText}>
-       🕣 {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
+       🕣   {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
        </View>
        <View style={styles.buttons}>
@@ -52,7 +52,15 @@ const styles = StyleSheet.create({
        flexWrap: 'wrap',
    },
    challengeText: {
-       fontSize: 17
+       fontSize: 17,
+       flexWrap: 'wrap',
+       flex: 1,
+        marginLeft: 5,
+   },
+
+   challengeData:{
+    flex: 2,
+
    },
 
    statusChallenge: {
@@ -72,12 +80,7 @@ const styles = StyleSheet.create({
        flexWrap: 'wrap',
    },
 
-   miniImage: {
-    width: 50,
-    height: 50,
-    resizeMode: 'cover',
-    marginBottom: 10,
-  },
+
 })
 
 
