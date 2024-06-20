@@ -87,6 +87,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                       visible={modalVisible}
                       animationType="slide"
                       onRequestClose={() => setModalVisible(false)}
+                      
                     >
                       <View style={styles.inputContainer}>
                         <TextInput
@@ -102,7 +103,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                           timePicker={true}
                           onChange={(params) => setDate(new Date(params.date))}
                         />
-
+                      <View style={styles.modalButtonsContainer}>
                         <Button
                           title="Invia sfida"
                           onPress={handleSendChallenge}
@@ -110,7 +111,9 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                         <Button
                           title="Annulla"
                           onPress={() => setModalVisible(false)}
+                          color="gray"
                         />
+                        </View>
                       </View>
                     </Modal>
                 </View>
@@ -134,6 +137,10 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
       marginBottom: 20,
+      flex: 1,
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     placeholder: {
       //marginBottom: 5,
@@ -141,12 +148,13 @@ const styles = StyleSheet.create({
       color: '#888',
     },
     input: {
-      width: '100%',
-      height: 40,
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 5,
-      paddingHorizontal: 10,
+      width: '70%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    
     },
     image: {
       width: 200,
@@ -194,6 +202,12 @@ const styles = StyleSheet.create({
     },
     text: {
       flexWrap: 'wrap',
+    },
+
+    modalButtonsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '100%',
     },
 });
 
