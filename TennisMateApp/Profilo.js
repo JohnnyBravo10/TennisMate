@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Modal, Button, ScrollView, useWindowDimensions } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Modal, Button, ScrollView, useWindowDimensions, ImageBackground } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
+
+const backgroundImage = require('./assets/background.png')
 
 const Profilo = ({
   name, setName, age, setAge, image, setImage, levelForehand, levelBackhand, levelVolee, levelService,
@@ -35,6 +37,7 @@ const Profilo = ({
   };
 
   return (
+    <ImageBackground source = {backgroundImage} style={styles.backgroundImage}>
     <ScrollView>
       <Text style={styles.title}>Profilo</Text>
       <Text style={styles.message}>{profileMessage}</Text>
@@ -42,7 +45,7 @@ const Profilo = ({
         <View style={styles.section}>
           <Text style={styles.subtitle}>Dati</Text>
           <View style={styles.inputContainer}>
-            <Text style={styles.placeholder}>Name</Text>
+            <Text style={styles.placeholder}>Nome</Text>
             <TextInput
               style={styles.input}
               placeholder="Nome"
@@ -51,7 +54,7 @@ const Profilo = ({
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.placeholder}>Age</Text>
+            <Text style={styles.placeholder}>Età</Text>
             <TextInput
               style={styles.input}
               placeholder="Età"
@@ -62,7 +65,7 @@ const Profilo = ({
           </View>
           <View style={styles.inputContainer}>
             <TouchableOpacity style={styles.inputContainer} onPress={handleImagePicker}>
-              <Text style={styles.placeholder}>Image</Text>
+              <Text style={styles.placeholder}>Immagine profilo</Text>
               {image ? (<Image source={{ uri: image }} style={styles.image} />) : (<Image source={require('./assets/profile.png')} style={styles.image} />)}
             </TouchableOpacity>
           </View>
@@ -171,6 +174,7 @@ const Profilo = ({
       </Modal>
 
     </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -180,6 +184,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingHorizontal: 5,
     paddingTop: 20,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    width:'100%'
   },
   form: {
     justifyContent: 'space-between',

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput, TouchableOpacity, Linking} from 'react-native';
+import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput, TouchableOpacity, Linking, ImageBackground} from 'react-native';
 import DateTimePicker from 'react-native-ui-datepicker';
+
+const backgroundImage = require('./assets/background.png')
 
 const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges, togglerUpdatedDetails}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
@@ -44,6 +46,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
   };
 
     return (
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
         <ScrollView>
           <Text style={styles.title}>Utenti consigliati</Text>
             {suggestedUsers.map((user, index) => (
@@ -117,6 +120,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                 </View>
             ))}
         </ScrollView>
+        </ImageBackground>
     );
 };
 
@@ -143,6 +147,11 @@ const styles = StyleSheet.create({
     placeholder: {
       fontSize: 16,
       color: '#888',
+    },
+    backgroundImage: {
+      flex: 1,
+      resizeMode: 'cover',
+      width:'100%'
     },
     input: {
       width: '70%',

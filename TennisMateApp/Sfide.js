@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {View, Text, ScrollView,  StyleSheet, useWindowDimensions} from 'react-native';
+import {View, Text, ScrollView,  StyleSheet, useWindowDimensions, ImageBackground} from 'react-native';
 
 import ReceivedChallenge from './ReceivedChallenge'
 import SentChallenge from './SentChallenge'
 
-
+const backgroundImage = require('./assets/background.png')
 
 const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
 
@@ -34,6 +34,7 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     })
 
 return (
+  <ImageBackground source = {backgroundImage} style={styles.backgroundImage}>
     <ScrollView style={isSmallScreen ? styles.formStretto : styles.formLargo}>
            <View style={styles.section}>
            <Text style={styles.subtitle}>Sfide ricevute</Text>
@@ -44,6 +45,7 @@ return (
            <View>{sentChallenges}</View>
            </View>
        </ScrollView>
+       </ImageBackground>
 )
 }
 
@@ -53,6 +55,11 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start', 
       paddingHorizontal: 20,
       paddingTop: 20, 
+    },
+    backgroundImage: {
+      flex: 1,
+      resizeMode: 'cover',
+      width:'100%'
     },
     form: {
       justifyContent: 'space-between', 

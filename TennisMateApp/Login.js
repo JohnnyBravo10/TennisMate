@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, useWindowDimensions, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, useWindowDimensions, Image, ScrollView, ImageBackground } from 'react-native';
 
 const LoginScreen = ({ username, password, setUsername, setPassword, message, becomeAuthenticated, setMessage, setProfileMessage, checkUser, checkUsernameAvailability, addUser, loadData, setImage }) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 375;
+
+  const backgroundImage = require('./assets/background.png')
 
   const handleLogin = async () => {
     if (await checkUser(username, password) === true) {
@@ -32,6 +34,7 @@ const LoginScreen = ({ username, password, setUsername, setPassword, message, be
   };
 
   return (
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={require('./assets/logo.png')} style={[styles.logo, isSmallScreen ? styles.smallLogo : styles.bigLogo]} />
       <Text style={styles.title}>Login</Text>
@@ -62,6 +65,7 @@ const LoginScreen = ({ username, password, setUsername, setPassword, message, be
       </TouchableOpacity>
       <Text style={styles.message}>{message}</Text>
     </ScrollView>
+    </ImageBackground>
   );
 };
 
@@ -72,6 +76,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    width:'100%'
+  },
   title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
   input: {
     width: '80%',
@@ -81,6 +90,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
+    backgroundColor: '#f0f0f0',
   },
   inputSmall: {
     width: '80%',
