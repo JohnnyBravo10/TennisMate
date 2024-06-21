@@ -93,7 +93,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
                       <View style={styles.inputContainer}>
                         <TextInput
                           style={styles.input}
-                          placeholder="Place"
+                          placeholder="Luogo"
                           value={proposedPlace}
                           onChangeText={(params) => setProposedPlace(params)}
                         />

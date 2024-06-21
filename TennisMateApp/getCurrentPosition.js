@@ -10,8 +10,8 @@ const getCurrentLocation = async () => {
     let location = await Location.getCurrentPositionAsync({});
     return location.coords;
   } catch (error) {
-    console.error('Errore durante il recupero della posizione:', error);
-    return null;
+    //console.error('Errore durante il recupero della posizione:', error);
+    return {latitude:'', longitude:''};
   }
 };
 
