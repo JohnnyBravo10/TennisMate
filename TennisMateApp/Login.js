@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, useWindowDimensions, Image, ScrollView } from 'react-native';
 
-const LoginScreen = ({ username, password, setUsername, setPassword, authenticated, message, becomeAuthenticated, setMessage, setProfileMessage, checkUser, checkUsernameAvailability, addUser, loadData, setImage }) => {
+const LoginScreen = ({ username, password, setUsername, setPassword, message, becomeAuthenticated, setMessage, setProfileMessage, checkUser, checkUsernameAvailability, addUser, loadData, setImage }) => {
   const { width } = useWindowDimensions();
   const isSmallScreen = width < 375;
 
   const handleLogin = async () => {
-    console.log(username, password);
     if (await checkUser(username, password) === true) {
       becomeAuthenticated(true);
       setMessage("Benvenuto " + username);
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   inputLarge: {
-    width: 300, // Larghezza massima per schermi larghi
+    width: 300, 
   },
   button: {
     justifyContent: 'center',
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
   },
   buttonLarge: {
-    width: 300, // Larghezza massima per schermi larghi
+    width: 300,
     height: 50,
     backgroundColor: 'blue',
   },
@@ -114,13 +113,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   smallLogo: {
-    width: '50%', // Adattabile in percentuale per schermi piccoli
+    width: '50%', 
     height: undefined,
-    aspectRatio: 1, // Mantiene le proporzioni
+    aspectRatio: 1, 
   },
   bigLogo: {
-    width: 150, // Larghezza fissa per schermi grandi
-    height: 150, // Altezza fissa per schermi grandi
+    width: 150, 
+    height: 150, 
   },
   message:{
     fontSize: 15, fontWeight: 'bold'

@@ -2,17 +2,16 @@ import React, { useState, useEffect } from 'react';
 import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput, TouchableOpacity, Linking} from 'react-native';
 import DateTimePicker from 'react-native-ui-datepicker';
 
-const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges, age, levelForehand, levelBackhand, levelVolee, levelService}) => {
+const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges, togglerUpdatedDetails}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [proposedPlace, setProposedPlace] = useState('');
     const [date, setDate] = useState(new Date());
-    const [selectedUser, setSelectedUser] = useState(null); // Stato per l'utente selezionato
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
             try {
-                console.log("il metodo fetchsuggestedusers è chiamato")
                 const users = await getSuggestedUsers(username); 
                 setSuggestedUsers(users); 
             } catch (error) {
@@ -21,18 +20,16 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
         };
 
         fetchSuggestedUsers(); 
-        console.log("suggested users",suggestedUsers)
-    }, [username, getSuggestedUsers, age, levelForehand, levelBackhand, levelVolee, levelService]); 
+    }, [username, getSuggestedUsers, togglerUpdatedDetails]); 
 
     const handleChallengePress = (user) => {
-        setSelectedUser(user); // Imposta l'utente selezionato
+        setSelectedUser(user);
         setModalVisible(true);
     };
 
     const handleSendChallenge = async () => {
         if (selectedUser) {
             await addChallenge(username, selectedUser.username, date, proposedPlace);
-            console.log("data: ",date)
             await changeChallenges(await findChallenges(username));
             setModalVisible(false);
             setProposedPlace('');
@@ -43,7 +40,6 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
 
     const openLink = (clubName) => {
       const url = `https://www.google.com/maps/search/${clubName.replace(/ /g, '+')}`;
-      console.log(url)
       Linking.openURL(url).catch((err) => console.error('Errore durante l\'apertura del link:', err));
   };
 
@@ -145,7 +141,6 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     placeholder: {
-      //marginBottom: 5,
       fontSize: 16,
       color: '#888',
     },

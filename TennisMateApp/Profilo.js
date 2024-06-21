@@ -26,14 +26,12 @@ const Profilo = ({
   };
 
   const handleUpdateUser = () => {
-    // Simulate saving changes
     updateUser();
 
-    // Show success feedback for 2 seconds
     setShowSuccess(true);
     setTimeout(() => {
       setShowSuccess(false);
-    }, 1300); // 2000 milliseconds = 2 seconds
+    }, 1300);
   };
 
   return (
@@ -273,7 +271,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     paddingHorizontal: 20,
-    width: 'auto', // Adatta la larghezza al contenuto
+    width: 'auto', 
   },
   buttonSmall: {
     width: '80%',

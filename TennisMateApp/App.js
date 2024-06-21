@@ -1,4 +1,4 @@
-import {Text, Button, View, StyleSheet, ScrollView} from 'react-native';
+import {Text} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -36,6 +36,8 @@ class App extends Component {
      surface:'',
 
      challenges:{received:[], sent:[]},
+
+     togglerUpdatedDetails:0
      
    }
    this.usernameChange = this.usernameChange.bind(this);
@@ -58,6 +60,8 @@ class App extends Component {
    this.surfaceChange = this.surfaceChange.bind(this);
 
    this.updateUser = this.updateUser.bind(this);
+
+   this.togglerUpdatedDetailsChange = this.togglerUpdatedDetailsChange.bind(this);
 
    this.changeChallenges = this.changeChallenges.bind(this)
    this.toggleAccepted = this.toggleAccepted.bind(this)
@@ -84,11 +88,7 @@ setProfileMessage(profileMessage){
 
 
 nameChange(name){
-  console.log("inizio name change")
-  console.log(this.state.name)
   this.setState({name: name})
-  console.log(this.state.name)
-  console.log("fine name change")
 }
 ageChange(age){
   this.setState({age})
@@ -114,9 +114,11 @@ clubChange(club){
 surfaceChange(surface){
   this.setState({surface})
 }
+togglerUpdatedDetailsChange(togglerUpdatedDetails){
+  this.setState({togglerUpdatedDetails: togglerUpdatedDetails})
+}
 
 resetDetails(){
-  console.log("starting reset")
   this.setState({name: '',
     age: 0,
     image: '',
@@ -128,10 +130,10 @@ resetDetails(){
     surface:'',
 
     challenges: {received:[], sent:[]},
+
+    togglerUpdatedDetails: 0
   })
 
-  console.log(this.state.name)
-  console.log("terminato reset")
 
 }
 
@@ -145,7 +147,7 @@ async loadData(username){
   this.ageChange(u.age);
   }
   if(u.image){
-    //console.log("entrato nell' if")
+
   this.imageChange(u.image);
   }
   if(u.levelForehand){
@@ -168,14 +170,12 @@ async loadData(username){
   }
 
   let challenges = await (findChallenges(username));
-  console.log("sfide trovate:", challenges)
   this.changeChallenges(challenges)
-
-  console.log(this.state)
 }
 
-updateUser(){
-  updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.levelForehand, this.state.levelBackhand, this.state.levelVolee, this.state.levelService, this.state.club, this.state.surface)
+async updateUser(){
+  await updateUserDetails(this.state.username, this.state.name, this.state.age, this.state.image, this.state.levelForehand, this.state.levelBackhand, this.state.levelVolee, this.state.levelService, this.state.club, this.state.surface)
+  await this.togglerUpdatedDetailsChange(this.state.togglerUpdatedDetails +1 )
 }
 
 changeChallenges(challenges){
@@ -183,15 +183,10 @@ changeChallenges(challenges){
 }
 
 async deleteChallenge(challengeIndex){
-  //let { challenges } = this.state
-  //received = challenges.received.filter((challenge) => challenge.challengeIndex !== challengeIndex)
-  //sent = challenges.sent.filter((challenge) => challenge.challengeIndex !== challengeIndex)
-  //this.setState({ challenges: {received: received, sent: sent} })
 
  try {
     await removeChallenge(challengeIndex);
-    challenges = await (findChallenges(this.state.username));
-    console.log("sfide trovate:", challenges)
+    let challenges = await (findChallenges(this.state.username));
     this.changeChallenges(challenges)
  } catch (error) {
     console.error('Error deleting challenge:', error);
@@ -211,33 +206,6 @@ async deleteUser(){
  }   
 }
 
-/*
-async toggleAccepted(challengeIndex) {
-  try {
-    const receivedChallenges = this.state.challenges.received;
-    const updatedChallenges = receivedChallenges.map(challenge => {
-      if (challenge.challengeIndex === challengeIndex) {
-        // Toggle the 'complete' property
-        return { ...challenge, accepted: !challenge.accepted };
-      }
-      return challenge;
-    });
-
-    this.setState({ received: updatedChallenges, sent: this.state.challenges.sent });
-
-    console.log("prima: ", receivedChallenges)
-    console.log("aggiornate: ", updatedChallenges)
-  
-
-    console.log("nuovo stato: ", !receivedChallenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted)
-
-    // Persist updated TODOs to storage
-    await updateChallenge(challengeIndex, { accepted: !receivedChallenges.find(challenge => challenge.challengeIndex === challengeIndex).accepted });
-  } catch (error) {
-    console.error('Error updating challenges:', error);
-  }
-}*/
-
 async toggleAccepted(challengeIndex) {
   try {
     const receivedChallenges = this.state.challenges.received;
@@ -255,11 +223,7 @@ async toggleAccepted(challengeIndex) {
         sent: this.state.challenges.sent 
       }
     }, async () => {
-      // Calcola il nuovo valore 'accepted' dopo l'aggiornamento dello stato
       const updatedChallenge = updatedChallenges.find(challenge => challenge.challengeIndex === challengeIndex);
-      console.log("prima: ", receivedChallenges);
-      console.log("aggiornate: ", updatedChallenges);
-      console.log("nuovo stato: ", updatedChallenge.accepted);
 
       // Persist updated challenge to storage
       await updateChallenge(challengeIndex, { accepted: updatedChallenge.accepted });
@@ -273,9 +237,7 @@ async toggleAccepted(challengeIndex) {
 
 render() {
   const { username, password, authenticated, message, profileMessage,
-           name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface, challenges } = this.state;
-
-  console.log("challenges in state: ", challenges);
+           name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface, challenges, togglerUpdatedDetails } = this.state;
 
   return (
     <NavigationContainer>
@@ -360,11 +322,7 @@ render() {
               addChallenge={addChallenge}
               findChallenges={findChallenges}
               changeChallenges={this.changeChallenges}
-              age={age}
-              levelForehand={levelForehand}
-              levelBackhand={levelBackhand}
-              levelVolee={levelVolee}
-              levelService={levelService}
+              togglerUpdatedDetails={togglerUpdatedDetails}
             />
           )}
           </Tab.Screen>
@@ -391,18 +349,6 @@ render() {
   );
 }
 }
-
-
-const styles = StyleSheet.create({
- container: {
-   flex: 1,
-   backgroundColor: '#f5f5f5',
- },
- content: {
-   flex: 1,
-   paddingTop: 60
- }
-})
 
 
 export default App

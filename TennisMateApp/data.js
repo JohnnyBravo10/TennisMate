@@ -6,7 +6,6 @@ const CHALLENGEs_KEY = '@challenges_1'
 
 export const checkUser = async (username, password) => {
     let userOk= false
-    console.log(userOk)
     const users = await getUsers();
     if (users.length!==0){
       users.forEach(user => {
@@ -24,7 +23,6 @@ export const checkUser = async (username, password) => {
     if (users.length!==0){
       users.forEach(user => {
         if (user.username === username){
-            console.log("found user:", user)
             foundUser = user
         }
       });
@@ -33,7 +31,6 @@ export const checkUser = async (username, password) => {
   };
 
   export const getProfilePicture = async (username) =>{
-    console.log("cerco foto profilo")
     const user = findUser(username);
     return user.image
     
@@ -65,12 +62,11 @@ export const checkUser = async (username, password) => {
     if (users.length!==0){
       users.forEach(user => {
         if (user.username === username){
-          console.log("trovato doppione")
+
             usernameAvailable = false;
         }
       });
     }
-    console.log(usernameAvailable)
     return usernameAvailable
   };
 
@@ -87,7 +83,7 @@ export const getUsers = async () => {
 export const getSuggestedUsers = async (username) => {
   try {
     const allUsers = await getUsers();
-    console.log("users da filtrare:", allUsers)
+  
     const user = await findUser(username);
     const suggestedUsers = [];
     allUsers.forEach(otherUser => {
@@ -97,7 +93,6 @@ export const getSuggestedUsers = async (username) => {
         }
       }
     })
-    console.log("selezionati:", suggestedUsers)
     return suggestedUsers;
   } catch (error) {
     console.error('Error retrieving suggested users:', error);
@@ -137,7 +132,6 @@ export const addUser = async (username, password) => {
   try {
     const users = await getUsers();
     users.push({username: username, password: password});
-    console.log("users after pushing", users)
     await saveUsers(users);
   } catch (error) {
     console.error('Error adding user:', error);
@@ -147,7 +141,6 @@ export const addUser = async (username, password) => {
 export const addChallenge = async (usernameChallenger, usernameChallenged, dateTime, place) => {
   try {
     const challenges = await getChallenges();
-    console.log("inserisco sfida a: ", usernameChallenged)
     index = 0
     challenges.forEach((challenge)=> {
       if (challenge.challengeIndex>=index){
@@ -155,7 +148,6 @@ export const addChallenge = async (usernameChallenger, usernameChallenged, dateT
       }
     })
     challenges.push({usernameChallenger: usernameChallenger, usernameChallenged: usernameChallenged, dateTime: dateTime, place: place, accepted: false, challengeIndex: index});
-    //console.log("after pushing: ", challenges)
     await saveChallenges(challenges);
   } catch (error) {
     console.error('Error adding challenge: ', error);
@@ -165,9 +157,7 @@ export const addChallenge = async (usernameChallenger, usernameChallenged, dateT
 export const removeChallenge = async (challengeId) => {
   try {
     const challenges = await getChallenges();
-    console.log("prima del filtraggio:", challenges)
     const updatedChallenges = challenges.filter(challenge => challenge.challengeIndex !== challengeId);
-    console.log("dopo il filtraggio:", updatedChallenges)
     await saveChallenges(updatedChallenges);
   } catch (error) {
     console.error('Error removing challenge:', error);
@@ -187,8 +177,6 @@ export const removeUser = async (username) => {
 export const updateUserDetails = async (username, name, age, image, levelForehand, levelBackhand, levelVolee, levelService, club, surface) => {
   try {
     const users = await getUsers();
-    console.log("starting updating")
-    console.log(users)
     level = 0
     if (Number(levelForehand) && Number(levelBackhand) && Number(levelVolee) && Number(levelService)){
       level = (Number(levelForehand) + Number(levelBackhand) + Number(levelVolee) + Number(levelService))/4
@@ -211,9 +199,8 @@ export const updateUserDetails = async (username, name, age, image, levelForehan
       }
 
     );
-    console.log(updatedUsers)
+  
     await saveUsers(updatedUsers);
-    console.log("updateato details")
   } catch (error) {
     console.error('Error updating Users:', error);
   }
@@ -222,11 +209,11 @@ export const updateUserDetails = async (username, name, age, image, levelForehan
 export const updateChallenge = async (challengeIndex, updatedChallenge) => {
   try {
     const challenges = await getChallenges();
-    console.log("challenge trovate in data: ", challenges)
+
     const updatedChallenges = challenges.map(challenge =>
       challenge.challengeIndex === challengeIndex ? { ...challenge, ...updatedChallenge } : challenge
     );
-    console.log("challenge aggiornate in data: ", updatedChallenges)
+
     await saveChallenges(updatedChallenges);
   } catch (error) {
     console.error('Error updating challenge:', error);

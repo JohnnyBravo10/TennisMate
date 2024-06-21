@@ -11,15 +11,12 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     const { width } = useWindowDimensions();
    const isSmallScreen = width < 690; 
 
-    console.log("sfide da cui partre:", challenges)
-
-    receivedChallenges = challenges.received
-    sentChallenges = challenges.sent
+    let receivedChallenges = challenges.received
+    let sentChallenges = challenges.sent
 
     receivedChallenges = receivedChallenges.map((challenge) => {
         return (
             <ReceivedChallenge
-                //{...props}
                 toggleAccepted={toggleAccepted}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
@@ -30,7 +27,6 @@ const Sfide = ({challenges, toggleAccepted, deleteChallenge}) => {
     sentChallenges = sentChallenges.map((challenge) => {
         return (
             <SentChallenge
-                //{...props}
                 deleteChallenge={deleteChallenge}
                 key={challenge.challengeIndex}
                 challenge={challenge} />
@@ -54,12 +50,12 @@ return (
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'flex-start', // Allinea i contenuti in alto
+      justifyContent: 'flex-start', 
       paddingHorizontal: 20,
-      paddingTop: 20, // Spazio in alto per allineare con il titolo della schermata
+      paddingTop: 20, 
     },
     form: {
-      justifyContent: 'space-between', // Spazio uniforme tra i contenitori
+      justifyContent: 'space-between', 
       marginBottom: 20,
     },
   
@@ -79,14 +75,14 @@ const styles = StyleSheet.create({
       padding: 10,
     },
     title: {
-      fontSize: 28, // Aumento della dimensione del carattere
-      fontWeight: 'bold', // Testo in grassetto
+      fontSize: 28, 
+      fontWeight: 'bold', 
       marginBottom: 10,
       marginLeft: '5%'
     },
     subtitle: {
-      fontSize: 20, // Aumento della dimensione del carattere
-      fontWeight: 'bold', // Testo in grassetto
+      fontSize: 20,
+      fontWeight: 'bold', 
       marginBottom: 10,
     },
     inputContainer: {
@@ -115,7 +111,6 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderRadius: 5,
       backgroundColor: '#f0f0f0',
-      ///backgroundColor: '#f0f0f0',
     },
     option:{
       borderWidth: 1,
