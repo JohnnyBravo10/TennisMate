@@ -20,7 +20,7 @@ const Profilo = ({
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync();
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
@@ -71,7 +71,10 @@ const Profilo = ({
         </View>
 
         <View style={styles.section}>
+          <View style = {styles.inputContainer}>
           <Text style={styles.subtitle}>Abilità</Text>
+          <Text style={styles.indication}> (Inserisci valori tra 1 e 10)</Text>
+          </View>
           <View style={styles.inputContainer}>
             <Text style={styles.placeholder}>Dritto</Text>
             <TextInput
@@ -287,6 +290,9 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 15, fontWeight: 'bold', marginLeft: '5%'
+  },
+  indication: {
+    fontSize: 15, fontWeight: 'bold'
   },
   modalContainer: {
     flex: 1,

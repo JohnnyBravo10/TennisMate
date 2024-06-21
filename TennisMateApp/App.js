@@ -360,6 +360,11 @@ render() {
               addChallenge={addChallenge}
               findChallenges={findChallenges}
               changeChallenges={this.changeChallenges}
+              age={age}
+              levelForehand={levelForehand}
+              levelBackhand={levelBackhand}
+              levelVolee={levelVolee}
+              levelService={levelService}
             />
           )}
           </Tab.Screen>

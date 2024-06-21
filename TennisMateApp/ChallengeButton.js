@@ -6,13 +6,15 @@ const ChallengeButton = ({ onPress, accept, name }) => (
    <TouchableHighlight
        onPress={onPress}
        underlayColor='#efefef'
-       style={styles.button}>
+       style={[styles.button,
+        accept ? styles.buttonAccepted : null,
+       ]}>
            <Text style={[
                styles.text,
                accept ? styles.complete : null,
                name === 'Elimina' ? styles.deleteButton : null
            ]}>
-               {name}
+               {name === 'Accetta' && accept? 'Accettata':name}
            </Text>
        </TouchableHighlight>
 )
@@ -25,7 +27,12 @@ const styles = StyleSheet.create({
        borderColor: '#ededed',
        borderWidth: 1,
        borderRadius: 4,
-       marginRight: 5
+       marginRight: 5, 
+       width:'100%',
+       marginVertical:5
+   },
+   buttonAccepted:{
+    borderColor: 'green'
    },
    text: {
        color: '#666666'
@@ -35,7 +42,7 @@ const styles = StyleSheet.create({
        fontWeight: 'bold'
    },
    deleteButton: {
-       color: 'rgba:(175, 47, 47, 1.0)'
+       color: 'red',
    }
 })
 

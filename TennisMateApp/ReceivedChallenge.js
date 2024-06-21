@@ -16,7 +16,7 @@ const goTo = async (clubName) => {
 
 const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
-       <View>
+       <View style={styles.challengeData}>
        <Text style={styles.challengeText} >
        👤   {challenge.usernameChallenger}
        </Text>
@@ -26,7 +26,7 @@ const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
        <Text style={styles.challengeText}>
        📅   {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
-       <Text>
+       <Text style={styles.challengeText}>
        🕣   {String(new Date(challenge.dateTime).getHours()).padStart(2, '0')}:{String(new Date(challenge.dateTime).getMinutes()).padStart(2, '0')}
        </Text>
        </View>
@@ -49,27 +49,32 @@ const ReceivedChallenge = ({challenge, toggleAccepted, deleteChallenge}) => (
 
 const styles = StyleSheet.create({
    challengeContainer: {
-       marginLeft: 20,
-       marginRight: 20,
-       backgroundColor: '#ffffff',
-       borderTopWidth: 1,
-       borderRightWidth: 1,
-       borderLeftWidth: 1,
-       borderColor: '#ededed',
-       paddingLeft: 14,
-       paddingTop: 7,
-       paddingBottom: 7,
-       shadowOpacity: 0.2,
-       shadowRadius: 3,
-       shadowColor: '#000000',
-       shadowOffset: { width: 2, height: 2},
-       flexDirection: 'row',
-       alignItems: 'center',
-       flexWrap: 'wrap',
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#ffffff',
+    borderTopWidth: 1,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    borderColor: '#ededed',
+    paddingLeft: 14,
+    paddingTop: 7,
+    paddingBottom: 7,
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 2, height: 2},
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'wrap',
    },
    challengeText: {
        fontSize: 17,
        flexWrap: 'wrap',
+       marginVertical:5
+   },
+   challengeData:{
+    flex: 2,
+
    },
    buttons: {
        flex: 1,

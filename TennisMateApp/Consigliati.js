@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Text, View, Image, StyleSheet, ScrollView, Modal, Button, TextInput, TouchableOpacity, Linking} from 'react-native';
 import DateTimePicker from 'react-native-ui-datepicker';
 
-const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges}) => {
+const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges, changeChallenges, age, levelForehand, levelBackhand, levelVolee, levelService}) => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [proposedPlace, setProposedPlace] = useState('');
@@ -12,6 +12,7 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
     useEffect(() => {
         const fetchSuggestedUsers = async () => {
             try {
+                console.log("il metodo fetchsuggestedusers è chiamato")
                 const users = await getSuggestedUsers(username); 
                 setSuggestedUsers(users); 
             } catch (error) {
@@ -20,7 +21,8 @@ const Consigliati = ({username, getSuggestedUsers, addChallenge, findChallenges,
         };
 
         fetchSuggestedUsers(); 
-    }, [username, getSuggestedUsers]); 
+        console.log("suggested users",suggestedUsers)
+    }, [username, getSuggestedUsers, age, levelForehand, levelBackhand, levelVolee, levelService]); 
 
     const handleChallengePress = (user) => {
         setSelectedUser(user); // Imposta l'utente selezionato

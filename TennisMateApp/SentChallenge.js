@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
        flexWrap: 'wrap',
        flex: 1,
         marginLeft: 5,
+        marginVertical:5
    },
 
    challengeData:{
@@ -83,7 +84,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 4,
     marginRight: 5,
-    fontSize: 12
+    fontSize: 14,
+    alignItems: 'center',
+    width:'99%'
 },
    buttons: {
        flex: 1,
