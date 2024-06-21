@@ -14,12 +14,12 @@ const goTo = async (clubName) => {
 const SentChallenge = ({challenge, deleteChallenge}) => (
    <View style={styles.challengeContainer}>
     <View style={styles.challengeData}>
-    <Text style={styles.challengeText}> 
-        👤  {challenge.usernameChallenged}
-       </Text>
-       <Text style={styles.challengeText}>
-       📍   {challenge.place}
-       </Text>
+    <View style={styles.inlineContainer}>
+       <View><Text style={styles.challengeText}>👤</Text></View><Text style={styles.challengeText}>{challenge.usernameChallenged}</Text>
+       </View>
+        <View style={styles.inlineContainer}>
+       <View><Text style={styles.challengeText}>📍</Text></View><Text style={styles.challengeText}>{challenge.place}</Text>
+       </View>
        <Text style={styles.challengeText}>
        📅   {String(new Date(challenge.dateTime).getDate()).padStart(2, '0')}/{String(new Date(challenge.dateTime).getMonth() + 1).padStart(2, '0')}/{new Date(challenge.dateTime).getFullYear()} 
        </Text>
@@ -61,11 +61,12 @@ const styles = StyleSheet.create({
        flexWrap: 'wrap',
    },
    challengeText: {
-       fontSize: 17,
+       fontSize: 15,
        flexWrap: 'wrap',
        flex: 1,
         marginLeft: 5,
-        marginVertical:5
+        marginVertical:5,
+        marginRight:5
    },
 
    challengeData:{
@@ -80,9 +81,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 4,
     marginRight: 5,
-    fontSize: 14,
+    fontSize: 12,
     alignItems: 'center',
-    width:'99%'
+    width:'100%'
 },
    buttons: {
        flex: 1,
@@ -91,6 +92,11 @@ const styles = StyleSheet.create({
        alignItems: 'center',
        flexWrap: 'wrap',
    },
+   inlineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
 
 
 })
